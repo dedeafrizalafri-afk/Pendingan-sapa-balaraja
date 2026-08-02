@@ -1,50 +1,24 @@
-// ======================================
-// REFUND DASHBOARD SAPA BALARAJA
-// ======================================
-
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS169Srv3rdFs6JAfzotcL9qklXPh0AKi6jt-2ROYDlYSKtdDJy2KQ0znqTfHF_IVCtLJjyXXdbnLbm/pub?gid=463015523&single=true&output=csv";
 
 
 let allData = [];
+let chart;
 
 
-// ======================================
-// AMBIL DATA GOOGLE SHEET
-// ======================================
+// AMBIL DATA
 
 async function loadData(){
 
 try{
 
-
-const response = await fetch(
-SHEET_URL,
-{
-method:"GET",
+const response = await fetch(SHEET_URL,{
 mode:"cors",
 cache:"no-cache"
-}
-);
-
-
-
-if(!response.ok){
-
-throw new Error(
-"Status Google Sheet : " + response.status
-);
-
-}
-
+});
 
 
 const csv = await response.text();
-
-
-console.log("CSV MASUK");
-console.log(csv.substring(0,500));
-
 
 
 const rows = csv
@@ -56,21 +30,21 @@ const rows = csv
 
 const header = rows[0]
 .split(",")
-.map(x=>x.replace(/"/g,"").trim());
+.map(x=>x.replace(/"/g,"").trim().toUpperCase());
 
 
 
-console.log("HEADER:",header);
+const idx = {
 
+tanggal: header.indexOf("TGL ORDER"),
+kode: header.indexOf("KODE TOKO"),
+nama: header.indexOf("NAMA TOKO"),
+order: header.indexOf("NO ORDER"),
+qty: header.indexOf("QTY"),
+customer: header.indexOf("NAMA CUSTOMER"),
+status: header.indexOf("PENANGANAN")
 
-
-const tanggal = header.indexOf("TGL ORDER");
-const kode = header.indexOf("KODE TOKO");
-const nama = header.indexOf("NAMA TOKO");
-const order = header.indexOf("NO ORDER");
-const qty = header.indexOf("QTY");
-const customer = header.indexOf("NAMA CUSTOMER");
-const status = header.indexOf("PENANGANAN");
+};
 
 
 
@@ -81,31 +55,20 @@ allData=[];
 for(let i=1;i<rows.length;i++){
 
 
-let col = rows[i]
+let c = rows[i]
 .split(",")
 .map(x=>x.replace(/"/g,"").trim());
 
 
-
-if(col.length<5) continue;
-
-
-
 allData.push({
 
-tanggal:col[tanggal] || "",
-
-kode:col[kode] || "",
-
-nama:col[nama] || "",
-
-order:col[order] || "",
-
-qty:Number(col[qty]) || 0,
-
-customer:col[customer] || "",
-
-status:col[status] || ""
+tanggal:c[idx.tanggal]||"",
+kode:c[idx.kode]||"",
+nama:c[idx.nama]||"",
+order:c[idx.order]||"",
+qty:Number(c[idx.qty])||0,
+customer:c[idx.customer]||"",
+status:c[idx.status]||""
 
 });
 
@@ -114,34 +77,19 @@ status:col[status] || ""
 
 
 
-console.log(
-"TOTAL DATA:",
-allData.length
-);
+console.log("TOTAL DATA:",allData.length);
 
 
 
-tampilDashboard();
-
-tampilTabel();
-
+tampilkan();
 
 
 }
+catch(e){
 
-catch(error){
+console.log(e);
 
-console.error(
-"ERROR:",
-error
-);
-
-
-alert(
-"Gagal membaca Google Sheet\n\n" +
-error.message
-);
-
+alert("Gagal membaca Google Sheet");
 
 }
 
@@ -150,65 +98,41 @@ error.message
 
 
 
-
-// ======================================
-// DASHBOARD
-// ======================================
-
-function tampilDashboard(){
+function tampil(){
 
 
 let pending =
 allData.filter(x=>
-
-x.status
-.toUpperCase()
-.includes("PENDING")
-
+x.status.toUpperCase()=="PENDING"
 ).length;
 
 
 
 let refund =
 allData.filter(x=>
-
-x.status
-.toUpperCase()
-.includes("REFUND")
-
+x.status.toUpperCase()=="REFUND"
 ).length;
 
 
 
-let totalQty =
-allData.reduce(
-(a,b)=>a+b.qty,
-0
-);
+let qty =
+allData.reduce((a,b)=>a+b.qty,0);
 
 
 
-let totalToko =
-new Set(
-allData.map(x=>x.kode)
-).size;
+let toko =
+new Set(allData.map(x=>x.kode)).size;
 
 
 
-document.getElementById("pending").innerHTML =
-pending;
+document.getElementById("pending").innerHTML=pending;
 
+document.getElementById("refund").innerHTML=refund;
 
-document.getElementById("refund").innerHTML =
-refund;
+document.getElementById("qty").innerHTML=qty;
 
+document.getElementById("toko").innerHTML=toko;
 
-document.getElementById("qty").innerHTML =
-totalQty;
-
-
-document.getElementById("toko").innerHTML =
-totalToko;
 
 
 document.getElementById("lastUpdate").innerHTML =
@@ -216,37 +140,26 @@ document.getElementById("lastUpdate").innerHTML =
 new Date().toLocaleString("id-ID");
 
 
-}
 
 
 
-
-
-// ======================================
 // TABEL
-// ======================================
-
-function tampilTabel(){
 
 
-const tbody =
+let tbody =
 document.querySelector("#dataTable tbody");
 
 
-if(!tbody) return;
-
-
+if(tbody){
 
 tbody.innerHTML="";
-
 
 
 allData.forEach(x=>{
 
 
-tbody.innerHTML +=
+tbody.innerHTML+=`
 
-`
 <tr>
 
 <td>${x.tanggal}</td>
@@ -264,10 +177,9 @@ tbody.innerHTML +=
 <td>${x.status}</td>
 
 </tr>
+
 `;
 
-
-
 });
 
 
@@ -276,57 +188,5 @@ tbody.innerHTML +=
 
 
 
-// ======================================
-// SEARCH
-// ======================================
 
-let search =
-document.getElementById("searchInput");
-
-
-if(search){
-
-
-search.addEventListener(
-"keyup",
-function(){
-
-
-let key =
-this.value.toLowerCase();
-
-
-
-document
-.querySelectorAll("#dataTable tbody tr")
-.forEach(row=>{
-
-
-row.style.display =
-
-row.innerText
-.toLowerCase()
-.includes(key)
-
-?
-""
-:
-"none";
-
-
-});
-
-
-});
-
-}
-
-
-
-
-
-// ======================================
-// MULAI
-// ======================================
-
-loadData();
+// GRAF
