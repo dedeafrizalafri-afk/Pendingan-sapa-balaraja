@@ -20,9 +20,10 @@ const csv = await response.text();
 
       console.log(csv);
 
-const rows = csv
+const const rows = csv
+.replace(/\r/g,"")
 .trim()
-.split(/\r?\n/);
+.split("\n");
 
 
 const headers = rows[0]
