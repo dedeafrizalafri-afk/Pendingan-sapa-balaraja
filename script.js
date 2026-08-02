@@ -16,6 +16,8 @@ try{
 
 const response = await fetch(SHEET_URL);
 
+console.log("HASIL CSV:", csv.substring(0,500));
+
 const csv = await response.text();
 
       console.log(csv);
@@ -48,7 +50,7 @@ const idxStatus = headers.indexOf("PENANGANAN");
 
 allData=[];
 
-
+console.log("JUMLAH BARIS:", rows.length);
 
 for(let i=1;i<rows.length;i++){
 
