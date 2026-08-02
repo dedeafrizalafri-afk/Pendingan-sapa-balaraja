@@ -1,1 +1,224 @@
+<!DOCTYPE html>
+<html lang="id">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Refund Dashboard SAPA BALARAJA</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+
+<body>
+
+
+<div class="sidebar">
+
+<div class="logo">
+<h2>SAPA</h2>
+<p>Refund Dashboard</p>
+</div>
+
+
+<button id="btnDashboard" class="menu active">
+📊 Dashboard
+</button>
+
+
+<button id="btnData" class="menu">
+📋 Data Pending
+</button>
+
+
+</div>
+
+
+
+
+
+<div class="content">
+
+
+<header>
+
+<h1>
+PENDINGAN SAPA BALARAJA
+</h1>
+
+<p id="lastUpdate">
+Last Update : -
+</p>
+
+</header>
+
+
+
+
+
+<section id="dashboardPage">
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<div class="icon">📦</div>
+
+<div>
+
+<span>Total Pending</span>
+
+<h2 id="pending">0</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">💰</div>
+
+<div>
+
+<span>Total Refund</span>
+
+<h2 id="refund">0</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">📊</div>
+
+<div>
+
+<span>Total Qty</span>
+
+<h2 id="qty">0</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="icon">🏪</div>
+
+<div>
+
+<span>Total Toko</span>
+
+<h2 id="toko">0</h2>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="chart-card">
+
+<h3>
+Grafik Pending dan Refund
+</h3>
+
+<canvas id="myChart"></canvas>
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<section id="dataPage" style="display:none;">
+
+
+<div class="table-card">
+
+
+<h2>
+Data Pending Refund
+</h2>
+
+
+
+<input 
+type="text"
+id="searchInput"
+placeholder="🔍 Cari data..."
+>
+
+
+
+<table id="dataTable">
+
+
+<thead>
+
+<tr>
+
+<th>Tanggal</th>
+<th>Kode Toko</th>
+<th>Nama Toko</th>
+<th>No Order</th>
+<th>Customer</th>
+<th>Qty</th>
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+
+<tbody>
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</section>
+
+
+
+</div>
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
