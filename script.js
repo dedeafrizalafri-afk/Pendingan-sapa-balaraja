@@ -1,192 +1,82 @@
+// =====================================
+// REFUND DASHBOARD SAPA BALARAJA
+// =====================================
+
 const SHEET_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vS169Srv3rdFs6JAfzotcL9qklXPh0AKi6jt-2ROYDlYSKtdDJy2KQ0znqTfHF_IVCtLJjyXXdbnLbm/pub?gid=463015523&single=true&output=csv";
 
-
 let allData = [];
-let chart;
+let chart = null;
 
+// =====================================
+// LOAD DATA
+// =====================================
 
-// AMBIL DATA
+async function loadData() {
 
-async function loadData(){
+try {
 
-try{
+const response = await fetch(SHEET_URL + "&t=" + Date.now());
 
-const response = await fetch(SHEET_URL,{
-mode:"cors",
-cache:"no-cache"
-});
+const text = await response.text();
 
+const rows = text.trim().split(/\r?\n/);
 
-const csv = await response.text();
+const header =
+rows[0]
+.replace(/\t/g,",")
+.split(",");
 
+const idxTanggal = header.indexOf("TGL ORDER");
+const idxKode = header.indexOf("KODE TOKO");
+const idxNama = header.indexOf("NAMA TOKO");
+const idxOrder = header.indexOf("NO ORDER");
+const idxQty = header.indexOf("QTY");
+const idxCustomer = header.indexOf("NAMA CUSTOMER");
+const idxStatus = header.indexOf("PENANGANAN");
 
-const rows = csv
-.replace(/\r/g,"")
-.trim()
-.split("\n");
-
-
-
-const header = rows[0]
-.split(",")
-.map(x=>x.replace(/"/g,"").trim().toUpperCase());
-
-
-
-const idx = {
-
-tanggal: header.indexOf("TGL ORDER"),
-kode: header.indexOf("KODE TOKO"),
-nama: header.indexOf("NAMA TOKO"),
-order: header.indexOf("NO ORDER"),
-qty: header.indexOf("QTY"),
-customer: header.indexOf("NAMA CUSTOMER"),
-status: header.indexOf("PENANGANAN")
-
-};
-
-
-
-allData=[];
-
-
+allData = [];
 
 for(let i=1;i<rows.length;i++){
 
-
-let c = rows[i]
-.split(",")
-.map(x=>x.replace(/"/g,"").trim());
-
+const col =
+rows[i]
+.replace(/\t/g,",")
+.split(",");
 
 allData.push({
 
-tanggal:c[idx.tanggal]||"",
-kode:c[idx.kode]||"",
-nama:c[idx.nama]||"",
-order:c[idx.order]||"",
-qty:Number(c[idx.qty])||0,
-customer:c[idx.customer]||"",
-status:c[idx.status]||""
+tanggal:col[idxTanggal]||"",
+
+kode:col[idxKode]||"",
+
+nama:col[idxNama]||"",
+
+order:col[idxOrder]||"",
+
+qty:Number(col[idxQty])||0,
+
+customer:col[idxCustomer]||"",
+
+status:col[idxStatus]||""
 
 });
 
-
 }
 
+console.log(allData);
 
+isiFilterToko();
 
-console.log("TOTAL DATA:",allData.length);
-
-
-
-tampilkan();
-
+filterData();
 
 }
-catch(e){
+catch(err){
 
-console.log(e);
+console.log(err);
 
 alert("Gagal membaca Google Sheet");
 
 }
 
 }
-
-
-
-
-function tampil(){
-
-
-let pending =
-allData.filter(x=>
-x.status.toUpperCase()=="PENDING"
-).length;
-
-
-
-let refund =
-allData.filter(x=>
-x.status.toUpperCase()=="REFUND"
-).length;
-
-
-
-let qty =
-allData.reduce((a,b)=>a+b.qty,0);
-
-
-
-let toko =
-new Set(allData.map(x=>x.kode)).size;
-
-
-
-document.getElementById("pending").innerHTML=pending;
-
-document.getElementById("refund").innerHTML=refund;
-
-document.getElementById("qty").innerHTML=qty;
-
-document.getElementById("toko").innerHTML=toko;
-
-
-
-document.getElementById("lastUpdate").innerHTML =
-"Last Update : "+
-new Date().toLocaleString("id-ID");
-
-
-
-
-
-// TABEL
-
-
-let tbody =
-document.querySelector("#dataTable tbody");
-
-
-if(tbody){
-
-tbody.innerHTML="";
-
-
-allData.forEach(x=>{
-
-
-tbody.innerHTML+=`
-
-<tr>
-
-<td>${x.tanggal}</td>
-
-<td>${x.kode}</td>
-
-<td>${x.nama}</td>
-
-<td>${x.order}</td>
-
-<td>${x.customer}</td>
-
-<td>${x.qty}</td>
-
-<td>${x.status}</td>
-
-</tr>
-
-`;
-
-});
-
-
-}
-
-
-
-
-
-// GRAF
