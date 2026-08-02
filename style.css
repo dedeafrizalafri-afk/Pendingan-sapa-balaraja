@@ -10,296 +10,249 @@ body{
     color:#1e293b;
 }
 
-
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 
 .sidebar{
-
     position:fixed;
     left:0;
     top:0;
-
     width:240px;
     height:100vh;
-
     background:#0f172a;
-    padding:25px;
-
-    color:white;
-
+    color:#fff;
+    padding:20px;
 }
-
 
 .logo{
-
     text-align:center;
-    margin-bottom:35px;
-
+    margin-bottom:30px;
 }
-
 
 .logo h2{
-
     color:#facc15;
-    font-size:35px;
-
+    font-size:32px;
 }
-
 
 .logo p{
-
     font-size:14px;
-
 }
-
-
 
 .menu{
-
     width:100%;
     padding:14px;
-
     margin-bottom:12px;
-
     border:none;
     border-radius:10px;
-
     background:#1e293b;
-
-    color:white;
-
+    color:#fff;
     cursor:pointer;
-
+    transition:.3s;
     font-size:15px;
-
-    text-align:left;
-
 }
-
-
 
 .menu:hover,
 .menu.active{
-
     background:#facc15;
-
     color:#111827;
-
 }
 
-
-
-/* CONTENT */
+/* ================= CONTENT ================= */
 
 .content{
-
-    margin-left:240px;
-
-    padding:30px;
-
+    margin-left:260px;
+    padding:25px;
 }
-
-
 
 header{
-
-    background:white;
-
+    background:#fff;
     padding:20px;
-
     border-radius:15px;
-
     margin-bottom:25px;
-
     box-shadow:0 5px 15px rgba(0,0,0,.08);
-
 }
-
 
 header h1{
-
-    font-size:25px;
-
+    margin-bottom:5px;
 }
 
+#lastUpdate{
+    color:#64748b;
+    font-size:14px;
+}
 
-
-
-
-/* CARD */
+/* ================= CARD ================= */
 
 .cards{
-
     display:grid;
-
     grid-template-columns:repeat(4,1fr);
-
     gap:20px;
-
+    margin-bottom:25px;
 }
-
-
 
 .card{
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:18px;
-
+    background:#fff;
+    border-radius:15px;
+    padding:20px;
     display:flex;
-
     align-items:center;
-
     gap:15px;
-
     box-shadow:0 5px 15px rgba(0,0,0,.08);
-
 }
-
-
 
 .icon{
-
     font-size:35px;
-
 }
-
-
 
 .card span{
-
     color:#64748b;
-
+    font-size:14px;
 }
-
 
 .card h2{
-
-    font-size:32px;
-
-    margin-top:5px;
-
+    font-size:30px;
 }
 
-
-
-
-
-/* CHART */
+/* ================= CHART ================= */
 
 .chart-card{
-
-    margin-top:25px;
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:18px;
-
-    height:350px;
-
+    background:#fff;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+    height:380px;
 }
 
+.chart-card canvas{
+    width:100% !important;
+    height:300px !important;
+}
 
-
-
-
-/* TABLE */
+/* ================= TABLE ================= */
 
 .table-card{
-
-    background:white;
-
-    padding:25px;
-
-    border-radius:18px;
-
+    background:#fff;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
+.filter-box{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+    margin:20px 0;
+}
+
+.filter-item{
+    display:flex;
+    flex-direction:column;
+}
+
+.filter-item label{
+    margin-bottom:5px;
+    font-size:13px;
+}
+
+.filter-item input,
+.filter-item select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+#btnFilter{
+    margin-top:23px;
+    padding:10px 20px;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+#btnFilter:hover{
+    background:#1d4ed8;
+}
 
 #searchInput{
-
     width:100%;
-
     padding:12px;
-
-    margin:20px 0;
-
-    border:1px solid #ddd;
-
-    border-radius:10px;
-
+    margin-bottom:20px;
+    border:1px solid #ccc;
+    border-radius:8px;
 }
 
-
+.table-wrapper{
+    overflow:auto;
+}
 
 table{
-
     width:100%;
-
     border-collapse:collapse;
-
 }
-
 
 th{
-
     background:#0f172a;
-
-    color:white;
-
+    color:#fff;
 }
 
-
-
-th,td{
-
+th,
+td{
     padding:12px;
-
     border-bottom:1px solid #ddd;
-
     text-align:left;
-
 }
-
-
 
 tr:hover{
-
     background:#f8fafc;
-
 }
 
+/* ================= STATUS ================= */
 
+.status-pending{
+    background:#f59e0b;
+    color:#fff;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
 
+.status-refund{
+    background:#10b981;
+    color:#fff;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
 
+.status-kirim{
+    background:#3b82f6;
+    color:#fff;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
 
-/* MOBILE */
+/* ================= MOBILE ================= */
 
 @media(max-width:900px){
 
 .sidebar{
-
-    width:80px;
-
+    position:relative;
+    width:100%;
+    height:auto;
 }
-
 
 .content{
-
-    margin-left:80px;
-
+    margin-left:0;
 }
-
 
 .cards{
-
     grid-template-columns:1fr;
-
 }
 
+.filter-box{
+    flex-direction:column;
+}
 
 }
