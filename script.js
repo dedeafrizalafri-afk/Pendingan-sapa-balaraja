@@ -18,6 +18,7 @@ const response = await fetch(SHEET_URL);
 
 const csv = await response.text();
 
+      console.log(csv);
 
 const rows = csv
 .trim()
