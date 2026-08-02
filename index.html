@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -15,26 +14,19 @@
 
 <body>
 
-<!-- SIDEBAR -->
-
 <div class="sidebar">
 
-<div class="logo">
-<h2>SAPA</h2>
-<p>Refund Dashboard</p>
-</div>
+<h2>SAPA BALARAJA</h2>
 
-<button id="btnDashboard" class="menu active">
+<button id="btnDashboard" class="active">
 📊 Dashboard
 </button>
 
-<button id="btnData" class="menu">
+<button id="btnData">
 📋 Data Pending
 </button>
 
 </div>
-
-<!-- CONTENT -->
 
 <div class="content">
 
@@ -48,81 +40,39 @@ Last Update : -
 
 </header>
 
-<!-- DASHBOARD -->
-
 <section id="dashboardPage">
 
 <div class="cards">
 
 <div class="card">
-
-<div class="icon">📦</div>
-
-<div>
-
-<span>Total Pending</span>
-
-<h2 id="pending">0</h2>
-
-</div>
-
+<h3>Total Pending</h3>
+<h1 id="pending">0</h1>
 </div>
 
 <div class="card">
-
-<div class="icon">💰</div>
-
-<div>
-
-<span>Total Refund</span>
-
-<h2 id="refund">0</h2>
-
-</div>
-
+<h3>Total Refund</h3>
+<h1 id="refund">0</h1>
 </div>
 
 <div class="card">
-
-<div class="icon">📊</div>
-
-<div>
-
-<span>Total Qty</span>
-
-<h2 id="qty">0</h2>
-
-</div>
-
+<h3>Total Qty</h3>
+<h1 id="qty">0</h1>
 </div>
 
 <div class="card">
-
-<div class="icon">🏪</div>
-
-<div>
-
-<span>Total Toko</span>
-
-<h2 id="toko">0</h2>
-
-</div>
-
+<h3>Total Toko</h3>
+<h1 id="toko">0</h1>
 </div>
 
 </div>
 
 <div class="chart-card">
 
-<h3>Grafik Refund Dashboard</h3>
-
 <canvas id="myChart"></canvas>
 
 </div>
 
 </section>
-
-<!-- DATA -->
 
 <section id="dataPage" style="display:none;">
 
@@ -132,31 +82,41 @@ Last Update : -
 
 <div class="filter-box">
 
-<div class="filter-item">
-<label>Dari Tanggal</label>
+<div>
+
+<label>Dari</label>
+
 <input type="date" id="filterDari">
+
 </div>
 
-<div class="filter-item">
-<label>Sampai Tanggal</label>
+<div>
+
+<label>Sampai</label>
+
 <input type="date" id="filterSampai">
+
 </div>
 
-<div class="filter-item">
+<div>
+
 <label>Kode Toko</label>
 
 <select id="filterToko">
-<option value="">Semua Toko</option>
+
+<option value="">Semua</option>
+
 </select>
 
 </div>
 
-<div class="filter-item">
+<div>
+
 <label>Status</label>
 
 <select id="filterStatus">
 
-<option value="">Semua Status</option>
+<option value="">Semua</option>
 
 <option value="PENDING">Pending</option>
 
@@ -168,9 +128,7 @@ Last Update : -
 
 </div>
 
-<div class="filter-item">
-
-<label>&nbsp;</label>
+<div>
 
 <button id="btnFilter">
 Filter
@@ -183,7 +141,7 @@ Filter
 <input
 type="text"
 id="searchInput"
-placeholder="🔍 Cari No Order, Customer atau Toko">
+placeholder="Cari Order / Customer / Toko">
 
 <div class="table-wrapper">
 
@@ -194,10 +152,10 @@ placeholder="🔍 Cari No Order, Customer atau Toko">
 <tr>
 
 <th>Tanggal</th>
-<th>Kode Toko</th>
+<th>Kode</th>
 <th>Nama Toko</th>
 <th>No Order</th>
-<th>Nama Customer</th>
+<th>Customer</th>
 <th>Qty</th>
 <th>Status</th>
 
