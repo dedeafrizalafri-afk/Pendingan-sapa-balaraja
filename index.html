@@ -1,183 +1,365 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Refund Dashboard SAPA BALARAJA</title>
-
-<link rel="stylesheet" href="style.css">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kontak WhatsApp Staf Toko</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #eef2f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #075e54;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .wa-icon-lg {
+            width: 36px;
+            height: 36px;
+            fill: #25d366;
+        }
+        p.subtitle {
+            color: #666;
+            font-size: 14px;
+            margin: 0;
+        }
+        .search-box {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 16px;
+            border: 2px solid #25D366;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin: 20px 0 10px 0;
+            transition: all 0.3s;
+        }
+        .search-box:focus {
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+        .stats {
+            font-size: 13px;
+            color: #777;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .store-card {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-top: 4px solid #25D366;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .store-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+        .store-code {
+            font-size: 12px;
+            font-weight: bold;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .store-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #222;
+            margin: 0;
+        }
+        .staff-count {
+            font-size: 12px;
+            color: #777;
+            margin-top: 4px;
+        }
+        .btn-wa-card {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-wa-card:hover {
+            background-color: #128C7E;
+        }
+        .btn-wa-card:active {
+            transform: scale(0.98);
+        }
+        .svg-wa {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        /* Modal Popup Pilihan Nomor Staf */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            backdrop-filter: blur(2px);
+        }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            overflow: hidden;
+            animation: popIn 0.2s ease-out;
+        }
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        .modal-header {
+            padding: 16px 20px;
+            background: #075e54;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-title {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-body {
+            padding: 10px 20px;
+            overflow-y: auto;
+        }
+        .staff-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .staff-item:last-child {
+            border-bottom: none;
+        }
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .staff-name {
+            font-weight: bold;
+            font-size: 14px;
+            color: #222;
+        }
+        .staff-phone {
+            font-size: 13px;
+            color: #555;
+        }
+        .badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #e0f2f1;
+            color: #00796b;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .btn-chat {
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(37,211,102,0.3);
+            transition: background 0.2s;
+        }
+        .btn-chat:hover {
+            background: #128C7E;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="sidebar">
+<div class="container">
+    <header>
+        <h1>
+            <svg class="wa-icon-lg" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.12 1.519 5.856L0 24l6.282-1.488c1.674.914 3.585 1.439 5.749 1.439 6.646 0 12.031-5.385 12.031-12.031C24.062 5.385 18.677 0 12.031 0zm0 22.029c-1.85 0-3.611-.497-5.15-1.411l-.369-.22-3.727.883.998-3.633-.241-.383C2.528 15.714 2.031 13.918 2.031 12.03 2.031 6.51 6.512 2.029 12.031 2.029c5.52 0 10.001 4.481 10.001 10.001 0 5.52-4.481 9.999-10.001 9.999zm5.485-7.493c-.301-.151-1.782-.88-2.057-.98-.276-.1-.477-.151-.678.151-.201.301-.779.98-.955 1.18-.176.201-.352.226-.653.075-.301-.151-1.272-.469-2.423-1.496-.895-.798-1.5-1.783-1.676-2.084-.176-.301-.019-.464.132-.614.136-.135.301-.352.452-.527.151-.176.201-.301.301-.502.1-.201.05-.377-.025-.527-.075-.151-.678-1.633-.929-2.235-.244-.585-.492-.506-.678-.515-.176-.008-.377-.008-.578-.008s-.527.075-.804.377c-.276.301-1.055 1.03-1.055 2.512 0 1.482 1.08 2.914 1.23 3.115.151.201 2.126 3.248 5.15 4.556.719.311 1.28.497 1.718.636.723.23 1.381.197 1.901.12.58-.087 1.782-.728 2.033-1.431.251-.703.251-1.306.176-1.431-.075-.126-.276-.201-.577-.352z"/></svg>
+            Daftar Kontak WhatsApp Staf Toko
+        </h1>
+        <p class="subtitle">Klik logo WhatsApp pada toko untuk melihat dan memilih nomor HP staf</p>
+    </header>
 
-<h2>SAPA BALARAJA</h2>
+    <input type="text" id="searchInput" class="search-box" placeholder="Cari nama toko atau kode toko (contoh: Legok, T100, dll)..." onkeyup="filterStores()">
+    <div class="stats" id="statsCount">Menampilkan 0 toko</div>
 
-<button id="btnDashboard" class="active">
-📊 Dashboard
-</button>
-
-<button id="btnData">
-📋 Data Pending
-</button>
-
+    <div class="store-grid" id="storeGrid"></div>
 </div>
 
-<div class="content">
-
-<header>
-
-<h1>Refund Dashboard SAPA BALARAJA</h1>
-
-<p id="lastUpdate">
-Last Update : -
-</p>
-
-</header>
-
-<section id="dashboardPage">
-
-<div class="cards">
-
-<div class="card">
-<h3>Total Pending</h3>
-<h1 id="pending">0</h1>
+<!-- Modal Pilihan Nomor Staf -->
+<div class="modal-overlay" id="waModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modalStoreTitle">Pilih Staf Toko</h3>
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body" id="modalStaffList">
+            <!-- List Staf -->
+        </div>
+    </div>
 </div>
 
-<div class="card">
-<h3>Total Refund</h3>
-<h1 id="refund">0</h1>
-</div>
+<script>
+    // Data Toko & Staf
+    const stores = [
+        {
+            code: "T100",
+            name: "LEGOK II",
+            staff: [
+                { name: "ANDIKA", phone_display: "85893808927", phone_wa: "6285893808927", cover: "DEPO" },
+                { name: "DIAN HANDAYANI", phone_display: "85695094452", phone_wa: "6285695094452", cover: "DEPO" },
+                { name: "MULYANA", phone_display: "81219284449", phone_wa: "6281219284449", cover: "DEPO" }
+            ]
+        },
+        {
+            code: "T517",
+            name: "DASANA INDAH",
+            staff: [
+                { name: "ARI ARDIANI", phone_display: "81280065942", phone_wa: "6281280065942", cover: "DEPO" },
+                { name: "MUHAMAD RIZKAN FAHREZI", phone_display: "83140373886", phone_wa: "6283140373886", cover: "DEPO" }
+            ]
+        }
+        // Masukkan data toko lainnya di sini
+    ];
 
-<div class="card">
-<h3>Total Qty</h3>
-<h1 id="qty">0</h1>
-</div>
+    const waSvg = `<svg class="svg-wa" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.12 1.519 5.856L0 24l6.282-1.488c1.674.914 3.585 1.439 5.749 1.439 6.646 0 12.031-5.385 12.031-12.031C24.062 5.385 18.677 0 12.031 0zm0 22.029c-1.85 0-3.611-.497-5.15-1.411l-.369-.22-3.727.883.998-3.633-.241-.383C2.528 15.714 2.031 13.918 2.031 12.03 2.031 6.51 6.512 2.029 12.031 2.029c5.52 0 10.001 4.481 10.001 10.001 0 5.52-4.481 9.999-10.001 9.999zm5.485-7.493c-.301-.151-1.782-.88-2.057-.98-.276-.1-.477-.151-.678.151-.201.301-.779.98-.955 1.18-.176.201-.352.226-.653.075-.301-.151-1.272-.469-2.423-1.496-.895-.798-1.5-1.783-1.676-2.084-.176-.301-.019-.464.132-.614.136-.135.301-.352.452-.527.151-.176.201-.301.301-.502.1-.201.05-.377-.025-.527-.075-.151-.678-1.633-.929-2.235-.244-.585-.492-.506-.678-.515-.176-.008-.377-.008-.578-.008s-.527.075-.804.377c-.276.301-1.055 1.03-1.055 2.512 0 1.482 1.08 2.914 1.23 3.115.151.201 2.126 3.248 5.15 4.556.719.311 1.28.497 1.718.636.723.23 1.381.197 1.901.12.58-.087 1.782-.728 2.033-1.431.251-.703.251-1.306.176-1.431-.075-.126-.276-.201-.577-.352z"/></svg>`;
 
-<div class="card">
-<h3>Total Toko</h3>
-<h1 id="toko">0</h1>
-</div>
+    function renderStores(list) {
+        const grid = document.getElementById('storeGrid');
+        grid.innerHTML = '';
+        document.getElementById('statsCount').innerText = `Menampilkan ${list.length} dari ${stores.length} toko`;
 
-</div>
+        list.forEach((store) => {
+            const index = stores.indexOf(store);
+            const card = document.createElement('div');
+            card.className = 'store-card';
+            card.innerHTML = `
+                <div class="store-header">
+                    <span class="store-code">${store.code}</span>
+                    <h3 class="store-name">${store.name}</h3>
+                    <div class="staff-count">👥 ${store.staff.length} Staf Terdaftar</div>
+                </div>
+                <button class="btn-wa-card" onclick="openModal(${index})">
+                    ${waSvg} Klik Logo WA (${store.staff.length} Pilihan)
+                </button>
+            `;
+            grid.appendChild(card);
+        });
+    }
 
-<div class="chart-card">
+    function openModal(index) {
+        const store = stores[index];
+        document.getElementById('modalStoreTitle').innerText = `[${store.code}] ${store.name}`;
+        
+        const listContainer = document.getElementById('modalStaffList');
+        listContainer.innerHTML = '';
 
-<canvas id="myChart"></canvas>
+        store.staff.forEach(staff => {
+            const item = document.createElement('div');
+            item.className = 'staff-item';
+            item.innerHTML = `
+                <div class="staff-info">
+                    <span class="staff-name">${staff.name} <span class="badge">${staff.cover}</span></span>
+                    <span class="staff-phone">📱 0${staff.phone_display}</span>
+                </div>
+                <a href="https://wa.me/${staff.phone_wa}" target="_blank" class="btn-chat">
+                    ${waSvg} Chat WA
+                </a>
+            `;
+            listContainer.appendChild(item);
+        });
 
-</div>
+        document.getElementById('waModal').style.display = 'flex';
+    }
 
-</section>
+    function closeModal() {
+        document.getElementById('waModal').style.display = 'none';
+    }
 
-<section id="dataPage" style="display:none;">
+    function filterStores() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = stores.filter(s => 
+            s.name.toLowerCase().includes(query) || 
+            s.code.toLowerCase().includes(query)
+        );
+        renderStores(filtered);
+    }
 
-<div class="table-card">
+    window.onclick = function(event) {
+        const modal = document.getElementById('waModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
 
-<h2>Data Pending Refund</h2>
-
-<div class="filter-box">
-
-<div>
-
-<label>Dari</label>
-
-<input type="date" id="filterDari">
-
-</div>
-
-<div>
-
-<label>Sampai</label>
-
-<input type="date" id="filterSampai">
-
-</div>
-
-<div>
-
-<label>Kode Toko</label>
-
-<select id="filterToko">
-
-<option value="">Semua</option>
-
-</select>
-
-</div>
-
-<div>
-
-<label>Status</label>
-
-<select id="filterStatus">
-
-<option value="">Semua</option>
-
-<option value="PENDING">Pending</option>
-
-<option value="REFUND">Refund</option>
-
-<option value="KIRIM ULANG">Kirim Ulang</option>
-
-</select>
-
-</div>
-
-<div>
-
-<button id="btnFilter">
-Filter
-</button>
-
-</div>
-
-</div>
-
-<input
-type="text"
-id="searchInput"
-placeholder="Cari Order / Customer / Toko">
-
-<div class="table-wrapper">
-
-<table id="dataTable">
-
-<thead>
-
-<tr>
-
-<th>Tanggal</th>
-<th>Kode</th>
-<th>Nama Toko</th>
-<th>No Order</th>
-<th>Customer</th>
-<th>Qty</th>
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-<script src="script.js"></script>
+    renderStores(stores);
+</script>
 
 </body>
 </html>
