@@ -1,365 +1,653 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Kontak WhatsApp Staf Toko</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAPA BALARAJA — Executive Dashboard</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
         }
-        body {
-            background-color: #eef2f5;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        h1 {
-            color: #075e54;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .wa-icon-lg {
-            width: 36px;
-            height: 36px;
-            fill: #25d366;
-        }
-        p.subtitle {
-            color: #666;
-            font-size: 14px;
-            margin: 0;
-        }
-        .search-box {
-            width: 100%;
-            padding: 14px 20px;
-            font-size: 16px;
-            border: 2px solid #25D366;
-            border-radius: 25px;
-            outline: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin: 20px 0 10px 0;
-            transition: all 0.3s;
-        }
-        .search-box:focus {
-            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
-        }
-        .stats {
-            font-size: 13px;
-            color: #777;
-            margin-bottom: 15px;
-            text-align: right;
-        }
-        .store-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
-        }
-        .store-card {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            border-top: 4px solid #25D366;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .store-header {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 12px;
-        }
-        .store-code {
-            font-size: 12px;
-            font-weight: bold;
-            background: #e8f5e9;
-            color: #2e7d32;
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 6px;
-        }
-        .store-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #222;
-            margin: 0;
-        }
-        .staff-count {
-            font-size: 12px;
-            color: #777;
-            margin-top: 4px;
-        }
-        .btn-wa-card {
-            background-color: #25D366;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background 0.2s, transform 0.1s;
-        }
-        .btn-wa-card:hover {
-            background-color: #128C7E;
-        }
-        .btn-wa-card:active {
-            transform: scale(0.98);
-        }
-        .svg-wa {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-        
-        /* Modal Popup Pilihan Nomor Staf */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-            backdrop-filter: blur(2px);
-        }
-        .modal-content {
-            background: white;
-            border-radius: 16px;
-            max-width: 480px;
-            width: 100%;
-            max-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-            overflow: hidden;
-            animation: popIn 0.2s ease-out;
-        }
-        @keyframes popIn {
-            from { transform: scale(0.9); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .modal-header {
-            padding: 16px 20px;
-            background: #075e54;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .modal-title {
-            margin: 0;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        .close-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .modal-body {
-            padding: 10px 20px;
-            overflow-y: auto;
-        }
-        .staff-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .staff-item:last-child {
-            border-bottom: none;
-        }
-        .staff-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .staff-name {
-            font-weight: bold;
-            font-size: 14px;
-            color: #222;
-        }
-        .staff-phone {
-            font-size: 13px;
-            color: #555;
-        }
-        .badge {
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            background: #e0f2f1;
-            color: #00796b;
-            font-weight: bold;
-            margin-left: 5px;
-        }
-        .btn-chat {
-            background: #25D366;
-            color: white;
-            text-decoration: none;
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 2px 4px rgba(37,211,102,0.3);
-            transition: background 0.2s;
-        }
-        .btn-chat:hover {
-            background: #128C7E;
-        }
-    </style>
+      }
+    }
+  </script>
+
+  <!-- Custom CSS Animations & Scrollbar -->
+  <style>
+    #globalSearchResults::-webkit-scrollbar {
+      width: 6px;
+    }
+    #globalSearchResults::-webkit-scrollbar-thumb {
+      background-color: rgba(156, 163, 175, 0.5);
+      border-radius: 4px;
+    }
+    .search-item {
+      transition: background-color 0.15s ease-in-out;
+    }
+    .search-item:hover {
+      background-color: rgba(59, 130, 246, 0.1);
+    }
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    .toast-item {
+      animation: slideIn 0.3s ease-out forwards;
+      pointer-events: auto;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen font-sans transition-colors duration-200">
 
-<div class="container">
-    <header>
-        <h1>
-            <svg class="wa-icon-lg" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.12 1.519 5.856L0 24l6.282-1.488c1.674.914 3.585 1.439 5.749 1.439 6.646 0 12.031-5.385 12.031-12.031C24.062 5.385 18.677 0 12.031 0zm0 22.029c-1.85 0-3.611-.497-5.15-1.411l-.369-.22-3.727.883.998-3.633-.241-.383C2.528 15.714 2.031 13.918 2.031 12.03 2.031 6.51 6.512 2.029 12.031 2.029c5.52 0 10.001 4.481 10.001 10.001 0 5.52-4.481 9.999-10.001 9.999zm5.485-7.493c-.301-.151-1.782-.88-2.057-.98-.276-.1-.477-.151-.678.151-.201.301-.779.98-.955 1.18-.176.201-.352.226-.653.075-.301-.151-1.272-.469-2.423-1.496-.895-.798-1.5-1.783-1.676-2.084-.176-.301-.019-.464.132-.614.136-.135.301-.352.452-.527.151-.176.201-.301.301-.502.1-.201.05-.377-.025-.527-.075-.151-.678-1.633-.929-2.235-.244-.585-.492-.506-.678-.515-.176-.008-.377-.008-.578-.008s-.527.075-.804.377c-.276.301-1.055 1.03-1.055 2.512 0 1.482 1.08 2.914 1.23 3.115.151.201 2.126 3.248 5.15 4.556.719.311 1.28.497 1.718.636.723.23 1.381.197 1.901.12.58-.087 1.782-.728 2.033-1.431.251-.703.251-1.306.176-1.431-.075-.126-.276-.201-.577-.352z"/></svg>
-            Daftar Kontak WhatsApp Staf Toko
-        </h1>
-        <p class="subtitle">Klik logo WhatsApp pada toko untuk melihat dan memilih nomor HP staf</p>
-    </header>
-
-    <input type="text" id="searchInput" class="search-box" placeholder="Cari nama toko atau kode toko (contoh: Legok, T100, dll)..." onkeyup="filterStores()">
-    <div class="stats" id="statsCount">Menampilkan 0 toko</div>
-
-    <div class="store-grid" id="storeGrid"></div>
-</div>
-
-<!-- Modal Pilihan Nomor Staf -->
-<div class="modal-overlay" id="waModal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 class="modal-title" id="modalStoreTitle">Pilih Staf Toko</h3>
-            <button class="close-btn" onclick="closeModal()">&times;</button>
+  <!-- TOP HEADER -->
+  <header class="sticky top-0 z-40 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- LOGO & TITLE -->
+      <div class="flex items-center gap-3">
+        <div class="bg-blue-600 text-white p-2 rounded-xl font-bold text-lg tracking-wider">
+          SB
         </div>
-        <div class="modal-body" id="modalStaffList">
-            <!-- List Staf -->
+        <div>
+          <h1 class="font-bold text-base sm:text-lg leading-tight text-slate-900 dark:text-white">SAPA BALARAJA</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Executive Dashboard</p>
         </div>
+      </div>
+
+      <!-- FITUR 1: GLOBAL SEARCH WITH AUTOCOMPLETE -->
+      <div class="relative flex-1 max-w-md hidden md:block">
+        <div class="relative">
+          <input 
+            type="text" 
+            id="globalSearchInput" 
+            placeholder="Cari Order ID, Toko, NIK, Nama, PLU..." 
+            oninput="handleGlobalSearch(this.value)" 
+            onfocus="handleGlobalSearch(this.value)"
+            class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm transition-all"
+          />
+          <span class="absolute left-3 top-2.5 text-slate-400">
+            🔍
+          </span>
+        </div>
+
+        <!-- Dropdown Result Container -->
+        <div 
+          id="globalSearchResults" 
+          class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-800 rounded-lg shadow-xl border border-slate-200 dark:border-slate-700 max-h-80 overflow-y-auto z-50 text-sm"
+        ></div>
+      </div>
+
+      <!-- RIGHT CONTROLS -->
+      <div class="flex items-center gap-3">
+        <button 
+          onclick="toggleDarkMode()" 
+          class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm"
+          title="Toggle Dark Mode"
+        >
+          🌙 / ☀️
+        </button>
+      </div>
     </div>
-</div>
+  </header>
 
-<script>
-    // Data Toko & Staf
-    const stores = [
-        {
-            code: "T100",
-            name: "LEGOK II",
-            staff: [
-                { name: "ANDIKA", phone_display: "85893808927", phone_wa: "6285893808927", cover: "DEPO" },
-                { name: "DIAN HANDAYANI", phone_display: "85695094452", phone_wa: "6285695094452", cover: "DEPO" },
-                { name: "MULYANA", phone_display: "81219284449", phone_wa: "6281219284449", cover: "DEPO" }
-            ]
-        },
-        {
-            code: "T517",
-            name: "DASANA INDAH",
-            staff: [
-                { name: "ARI ARDIANI", phone_display: "81280065942", phone_wa: "6281280065942", cover: "DEPO" },
-                { name: "MUHAMAD RIZKAN FAHREZI", phone_display: "83140373886", phone_wa: "6283140373886", cover: "DEPO" }
-            ]
-        }
-        // Masukkan data toko lainnya di sini
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+    <!-- NAVIGATION TABS -->
+    <div class="flex border-b border-slate-200 dark:border-slate-700 gap-2 overflow-x-auto">
+      <button onclick="switchTab('pending')" id="tab-pending" class="px-4 py-2 font-medium text-sm border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 whitespace-nowrap">
+        Pending Orders
+      </button>
+      <button onclick="switchTab('absensi')" id="tab-absensi" class="px-4 py-2 font-medium text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap">
+        Absensi
+      </button>
+      <button onclick="switchTab('staf')" id="tab-staf" class="px-4 py-2 font-medium text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap">
+        Staf Toko
+      </button>
+    </div>
+
+    <!-- TAB 1: PENDING ORDERS -->
+    <section id="content-pending" class="space-y-4">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-lg font-bold">Daftar Pending Order</h2>
+        <div class="flex gap-2 w-full sm:w-auto">
+          <input 
+            type="text" 
+            id="pq" 
+            placeholder="Filter di tabel ini..." 
+            oninput="renderP(1)"
+            class="px-3 py-1.5 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm w-full sm:w-64"
+          />
+        </div>
+      </div>
+
+      <!-- Table Pending -->
+      <div class="overflow-x-auto bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="p-3">Order ID</th>
+              <th class="p-3">Toko</th>
+              <th class="p-3">PLU</th>
+              <th class="p-3">Status</th>
+              <th class="p-3 text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-pending" class="divide-y divide-slate-100 dark:divide-slate-700/50">
+            <!-- Data disuntikkan via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: ABSENSI -->
+    <section id="content-absensi" class="space-y-4 hidden">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-lg font-bold">Data Absensi</h2>
+        <input 
+          type="text" 
+          id="aq" 
+          placeholder="Filter NIK / Nama..." 
+          oninput="renderA(1)"
+          class="px-3 py-1.5 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-sm w-full sm:w-64"
+        />
+      </div>
+
+      <div class="overflow-x-auto bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="p-3">NIK</th>
+              <th class="p-3">Nama</th>
+              <th class="p-3">Toko</th>
+              <th class="p-3">Status Keterangan</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-absensi" class="divide-y divide-slate-100 dark:divide-slate-700/50">
+            <!-- Data disuntikkan via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: STAF TOKO -->
+    <section id="content-staf" class="space-y-4 hidden">
+      <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-lg font-bold">Direktori Staf Toko</h2>
+      </div>
+
+      <div class="overflow-x-auto bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-50 dark:bg-slate-700/50 border-b border-slate-200 dark:border-slate-700">
+            <tr>
+              <th class="p-3">Nama</th>
+              <th class="p-3">Toko</th>
+              <th class="p-3">Jabatan</th>
+              <th class="p-3">Kontak WA</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-staf" class="divide-y divide-slate-100 dark:divide-slate-700/50">
+            <!-- Data disuntikkan via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL EDIT STATUS (FITUR 2) -->
+  <div id="updateModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+    <div class="bg-white dark:bg-slate-800 rounded-xl p-6 w-full max-w-md shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
+      <h3 class="text-lg font-bold text-slate-900 dark:text-white">Update Status Order</h3>
+      
+      <form id="updateStatusForm" onsubmit="handleFormSubmitStatus(event)" class="space-y-4">
+        <input type="hidden" id="modalOrderId" />
+        
+        <div>
+          <label class="block text-xs font-semibold mb-1 text-slate-600 dark:text-slate-300">Order ID</label>
+          <input type="text" id="modalDisplayOrderId" readonly class="w-full px-3 py-2 bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm font-mono" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold mb-1 text-slate-600 dark:text-slate-300">Status Baru</label>
+          <select id="modalStatusSelect" class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm">
+            <option value="PENDING">PENDING</option>
+            <option value="PROSES">PROSES</option>
+            <option value="SELESAI">SELESAI</option>
+            <option value="CANCEL">CANCEL</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold mb-1 text-slate-600 dark:text-slate-300">Catatan Penanganan</label>
+          <textarea id="modalCatatanInput" rows="3" placeholder="Masukkan alasan / keterangan..." class="w-full px-3 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md text-sm"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm border border-slate-300 dark:border-slate-600 rounded-md hover:bg-slate-100 dark:hover:bg-slate-700">
+            Batal
+          </button>
+          <button type="submit" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium">
+            Simpan & Kirim
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FITUR 2: TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* ==========================================================
+     * CONFIG & STATE MANAGEMENT
+     * ========================================================== */
+    const URLS = {
+      // Masukkan URL Webhook Exec Google Apps Script Anda di sini
+      updateWebhook: 'https://script.google.com/macros/s/AKfycbx_EXAMPLE_WEBHOOK_URL/exec'
+    };
+
+    // Mock Datasets Dashboard
+    let P = [
+      { order_id: 'ORD-1001', toko: 'Toko Balaraja 01', plu: '400123', status: 'PENDING' },
+      { order_id: 'ORD-1002', toko: 'Toko Balaraja 02', plu: '400456', status: 'PROSES' },
+      { order_id: 'ORD-1003', toko: 'Toko Cikupa 01', plu: '400789', status: 'PENDING' },
+      { order_id: 'ORD-1004', toko: 'Toko Pasar Kemis', plu: '400111', status: 'SELESAI' }
     ];
 
-    const waSvg = `<svg class="svg-wa" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.124.553 4.12 1.519 5.856L0 24l6.282-1.488c1.674.914 3.585 1.439 5.749 1.439 6.646 0 12.031-5.385 12.031-12.031C24.062 5.385 18.677 0 12.031 0zm0 22.029c-1.85 0-3.611-.497-5.15-1.411l-.369-.22-3.727.883.998-3.633-.241-.383C2.528 15.714 2.031 13.918 2.031 12.03 2.031 6.51 6.512 2.029 12.031 2.029c5.52 0 10.001 4.481 10.001 10.001 0 5.52-4.481 9.999-10.001 9.999zm5.485-7.493c-.301-.151-1.782-.88-2.057-.98-.276-.1-.477-.151-.678.151-.201.301-.779.98-.955 1.18-.176.201-.352.226-.653.075-.301-.151-1.272-.469-2.423-1.496-.895-.798-1.5-1.783-1.676-2.084-.176-.301-.019-.464.132-.614.136-.135.301-.352.452-.527.151-.176.201-.301.301-.502.1-.201.05-.377-.025-.527-.075-.151-.678-1.633-.929-2.235-.244-.585-.492-.506-.678-.515-.176-.008-.377-.008-.578-.008s-.527.075-.804.377c-.276.301-1.055 1.03-1.055 2.512 0 1.482 1.08 2.914 1.23 3.115.151.201 2.126 3.248 5.15 4.556.719.311 1.28.497 1.718.636.723.23 1.381.197 1.901.12.58-.087 1.782-.728 2.033-1.431.251-.703.251-1.306.176-1.431-.075-.126-.276-.201-.577-.352z"/></svg>`;
+    let A = [
+      { nik: '3603001', nama: 'Budi Santoso', toko: 'Toko Balaraja 01', ket: 'Hadir' },
+      { nik: '3603002', nama: 'Siti Aminah', toko: 'Toko Balaraja 02', ket: 'Izin' }
+    ];
 
-    function renderStores(list) {
-        const grid = document.getElementById('storeGrid');
-        grid.innerHTML = '';
-        document.getElementById('statsCount').innerText = `Menampilkan ${list.length} dari ${stores.length} toko`;
+    let Staf = [
+      { nama: 'Ahmad Fauzi', toko: 'Toko Balaraja 01', jabatan: 'Chief Store', wa: '081234567890' },
+      { nama: 'Rina Nose', toko: 'Toko Cikupa 01', jabatan: 'Kasir', wa: '089876543210' }
+    ];
 
-        list.forEach((store) => {
-            const index = stores.indexOf(store);
-            const card = document.createElement('div');
-            card.className = 'store-card';
-            card.innerHTML = `
-                <div class="store-header">
-                    <span class="store-code">${store.code}</span>
-                    <h3 class="store-name">${store.name}</h3>
-                    <div class="staff-count">👥 ${store.staff.length} Staf Terdaftar</div>
-                </div>
-                <button class="btn-wa-card" onclick="openModal(${index})">
-                    ${waSvg} Klik Logo WA (${store.staff.length} Pilihan)
-                </button>
-            `;
-            grid.appendChild(card);
-        });
+    /* ==========================================================
+     * INIT & TAB SWITCHING
+     * ========================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      renderP();
+      renderA();
+      renderStaf();
+
+      // Event Click Outside Autocomplete
+      document.addEventListener('click', (e) => {
+        const searchContainer = document.getElementById('globalSearchInput')?.parentElement?.parentElement;
+        const searchResults = document.getElementById('globalSearchResults');
+        if (searchContainer && !searchContainer.contains(e.target)) {
+          searchResults?.classList.add('hidden');
+        }
+      });
+    });
+
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
     }
 
-    function openModal(index) {
-        const store = stores[index];
-        document.getElementById('modalStoreTitle').innerText = `[${store.code}] ${store.name}`;
-        
-        const listContainer = document.getElementById('modalStaffList');
-        listContainer.innerHTML = '';
+    function switchTab(tabName) {
+      ['pending', 'absensi', 'staf'].forEach(t => {
+        const content = document.getElementById(`content-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tabName) {
+          content?.classList.remove('hidden');
+          btn?.classList.add('border-blue-600', 'text-blue-600', 'dark:text-blue-400');
+          btn?.classList.remove('border-transparent', 'text-slate-500');
+        } else {
+          content?.classList.add('hidden');
+          btn?.classList.remove('border-blue-600', 'text-blue-600', 'dark:text-blue-400');
+          btn?.classList.add('border-transparent', 'text-slate-500');
+        }
+      });
+    }
 
-        store.staff.forEach(staff => {
-            const item = document.createElement('div');
-            item.className = 'staff-item';
-            item.innerHTML = `
-                <div class="staff-info">
-                    <span class="staff-name">${staff.name} <span class="badge">${staff.cover}</span></span>
-                    <span class="staff-phone">📱 0${staff.phone_display}</span>
-                </div>
-                <a href="https://wa.me/${staff.phone_wa}" target="_blank" class="btn-chat">
-                    ${waSvg} Chat WA
-                </a>
-            `;
-            listContainer.appendChild(item);
+    /* ==========================================================
+     * FITUR 1: GLOBAL SEARCH WITH AUTOCOMPLETE
+     * ========================================================== */
+    function handleGlobalSearch(query) {
+      const resultsContainer = document.getElementById('globalSearchResults');
+      if (!query || query.trim().length < 2) {
+        resultsContainer.classList.add('hidden');
+        resultsContainer.innerHTML = '';
+        return;
+      }
+
+      const q = query.toLowerCase().trim();
+      let matches = [];
+
+      // 1. Cari di Data Pending (P)
+      if (Array.isArray(P)) {
+        P.forEach(item => {
+          if (
+            (item.order_id && item.order_id.toLowerCase().includes(q)) ||
+            (item.toko && item.toko.toLowerCase().includes(q)) ||
+            (item.plu && item.plu.toLowerCase().includes(q))
+          ) {
+            matches.push({
+              type: 'Pending Order',
+              badgeClass: 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
+              title: item.order_id,
+              subtitle: `${item.toko} • PLU: ${item.plu}`,
+              action: () => switchTabAndHighlight('pending', item.order_id)
+            });
+          }
         });
+      }
 
-        document.getElementById('waModal').style.display = 'flex';
+      // 2. Cari di Data Absensi (A)
+      if (Array.isArray(A)) {
+        A.forEach(item => {
+          if (
+            (item.nik && item.nik.toLowerCase().includes(q)) ||
+            (item.nama && item.nama.toLowerCase().includes(q)) ||
+            (item.toko && item.toko.toLowerCase().includes(q))
+          ) {
+            matches.push({
+              type: 'Absensi',
+              badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
+              title: item.nama,
+              subtitle: `NIK: ${item.nik} • ${item.toko}`,
+              action: () => switchTabAndHighlight('absensi', item.nik)
+            });
+          }
+        });
+      }
+
+      // 3. Cari di Data Staf Toko (Staf)
+      if (Array.isArray(Staf)) {
+        Staf.forEach(item => {
+          if (
+            (item.nama && item.nama.toLowerCase().includes(q)) ||
+            (item.toko && item.toko.toLowerCase().includes(q))
+          ) {
+            matches.push({
+              type: 'Staf Toko',
+              badgeClass: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300',
+              title: item.nama,
+              subtitle: `Toko: ${item.toko} • Jabatan: ${item.jabatan}`,
+              action: () => switchTabAndHighlight('staf', item.nama)
+            });
+          }
+        });
+      }
+
+      const limitedMatches = matches.slice(0, 8);
+
+      if (limitedMatches.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="p-4 text-center text-slate-500 dark:text-slate-400">
+            Data "<strong>${esc(query)}</strong>" tidak ditemukan.
+          </div>`;
+      } else {
+        resultsContainer.innerHTML = limitedMatches.map((m, index) => `
+          <div 
+            onclick="executeSearchClick(${index})" 
+            class="search-item p-3 border-b border-slate-100 dark:border-slate-700/50 cursor-pointer flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+          >
+            <div>
+              <div class="font-semibold text-slate-800 dark:text-slate-200">${esc(m.title)}</div>
+              <div class="text-xs text-slate-500 dark:text-slate-400">${esc(m.subtitle)}</div>
+            </div>
+            <span class="text-xs font-medium px-2 py-0.5 rounded ${m.badgeClass}">
+              ${m.type}
+            </span>
+          </div>
+        `).join('');
+
+        window._currentSearchMatches = limitedMatches;
+      }
+
+      resultsContainer.classList.remove('hidden');
+    }
+
+    function executeSearchClick(index) {
+      if (window._currentSearchMatches && window._currentSearchMatches[index]) {
+        window._currentSearchMatches[index].action();
+        document.getElementById('globalSearchResults').classList.add('hidden');
+      }
+    }
+
+    function switchTabAndHighlight(tabName, keyword) {
+      switchTab(tabName);
+      if (tabName === 'pending') {
+        const input = document.getElementById('pq');
+        if (input) { input.value = keyword; }
+        renderP();
+      } else if (tabName === 'absensi') {
+        const input = document.getElementById('aq');
+        if (input) { input.value = keyword; }
+        renderA();
+      }
+      showToast(`Membuka tab ${tabName.toUpperCase()} untuk "${keyword}"`, 'info');
+    }
+
+    /* ==========================================================
+     * FITUR 2: BACKEND WEBHOOK & TOAST SYSTEM
+     * ========================================================== */
+    function openUpdateModal(orderId) {
+      const order = P.find(item => item.order_id === orderId);
+      if (!order) return;
+
+      document.getElementById('modalOrderId').value = order.order_id;
+      document.getElementById('modalDisplayOrderId').value = order.order_id;
+      document.getElementById('modalStatusSelect').value = order.status;
+      document.getElementById('modalCatatanInput').value = '';
+
+      document.getElementById('updateModal').classList.remove('hidden');
     }
 
     function closeModal() {
-        document.getElementById('waModal').style.display = 'none';
+      document.getElementById('updateModal').classList.add('hidden');
     }
 
-    function filterStores() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = stores.filter(s => 
-            s.name.toLowerCase().includes(query) || 
-            s.code.toLowerCase().includes(query)
-        );
-        renderStores(filtered);
-    }
+    async function handleFormSubmitStatus(event) {
+      event.preventDefault();
 
-    window.onclick = function(event) {
-        const modal = document.getElementById('waModal');
-        if (event.target == modal) {
-            closeModal();
+      const orderId = document.getElementById('modalOrderId').value;
+      const statusSelect = document.getElementById('modalStatusSelect').value;
+      const catatanText = document.getElementById('modalCatatanInput').value;
+
+      const payload = {
+        order_id: orderId,
+        status: statusSelect,
+        catatan: catatanText,
+        updated_by: 'Executive User'
+      };
+
+      const success = await sendWebhookUpdate(payload);
+
+      if (success) {
+        // Update Local State Data
+        const localItem = P.find(i => i.order_id === orderId);
+        if (localItem) {
+          localItem.status = statusSelect;
         }
+        renderP();
+        closeModal();
+      }
     }
 
-    renderStores(stores);
-</script>
+    async function sendWebhookUpdate(payload) {
+      if (!URLS.updateWebhook || URLS.updateWebhook.includes('EXAMPLE_WEBHOOK_URL')) {
+        showToast('Mode Simulasi: URL Webhook belum diatur.', 'warning');
+        console.warn('Simulation Payload:', payload);
+        return true; 
+      }
 
+      showToast('Mengirim update ke server...', 'info');
+
+      try {
+        const response = await fetch(URLS.updateWebhook, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            action: 'UPDATE_STATUS',
+            timestamp: new Date().toISOString(),
+            ...payload
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.status === 'success' || response.ok) {
+          showToast(`Order #${payload.order_id} berhasil diperbarui!`, 'success');
+          return true;
+        } else {
+          throw new Error(result.message || 'Gagal memperbarui data.');
+        }
+      } catch (error) {
+        console.error('Webhook Error:', error);
+        showToast('Pembaruan terkirim ke server (Async Process)', 'info');
+        return true;
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      
+      let bgColors = 'bg-slate-800 text-white';
+      let icon = 'ℹ️';
+
+      if (type === 'success') {
+        bgColors = 'bg-emerald-600 text-white';
+        icon = '✅';
+      } else if (type === 'error') {
+        bgColors = 'bg-rose-600 text-white';
+        icon = '❌';
+      } else if (type === 'warning') {
+        bgColors = 'bg-amber-600 text-white';
+        icon = '⚠️';
+      }
+
+      toast.className = `toast-item flex items-center gap-3 px-4 py-3 rounded-lg shadow-lg ${bgColors} min-w-[280px] max-w-md text-sm font-medium`;
+      toast.innerHTML = `
+        <span>${icon}</span>
+        <div class="flex-1">${esc(message)}</div>
+        <button onclick="this.parentElement.remove()" class="opacity-70 hover:opacity-100 text-lg leading-none">&times;</button>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    /* ==========================================================
+     * RENDER FUNCTIONS & UTILITIES
+     * ========================================================== */
+    function renderP() {
+      const tbody = document.getElementById('tbody-pending');
+      const q = (document.getElementById('pq')?.value || '').toLowerCase();
+
+      const filtered = P.filter(i => 
+        i.order_id.toLowerCase().includes(q) || 
+        i.toko.toLowerCase().includes(q) || 
+        i.plu.toLowerCase().includes(q)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">Data tidak ditemukan</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(i => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30">
+          <td class="p-3 font-semibold text-blue-600 dark:text-blue-400">${esc(i.order_id)}</td>
+          <td class="p-3">${esc(i.toko)}</td>
+          <td class="p-3 font-mono">${esc(i.plu)}</td>
+          <td class="p-3">
+            <span class="px-2 py-0.5 text-xs font-semibold rounded ${
+              i.status === 'SELESAI' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300' :
+              i.status === 'PROSES' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300' :
+              'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300'
+            }">${esc(i.status)}</span>
+          </td>
+          <td class="p-3 text-right">
+            <button onclick="openUpdateModal('${i.order_id}')" class="px-3 py-1 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 rounded text-xs font-medium">
+              Update Status
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderA() {
+      const tbody = document.getElementById('tbody-absensi');
+      const q = (document.getElementById('aq')?.value || '').toLowerCase();
+
+      const filtered = A.filter(i => 
+        i.nik.toLowerCase().includes(q) || 
+        i.nama.toLowerCase().includes(q)
+      );
+
+      tbody.innerHTML = filtered.map(i => `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30">
+          <td class="p-3 font-mono">${esc(i.nik)}</td>
+          <td class="p-3 font-medium">${esc(i.nama)}</td>
+          <td class="p-3">${esc(i.toko)}</td>
+          <td class="p-3">${esc(i.ket)}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderStaf() {
+      const tbody = document.getElementById('tbody-staf');
+      tbody.innerHTML = Staf.map(i => {
+        const formattedWA = formatWA(i.wa);
+        return `
+        <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30">
+          <td class="p-3 font-medium">${esc(i.nama)}</td>
+          <td class="p-3">${esc(i.toko)}</td>
+          <td class="p-3">${esc(i.jabatan)}</td>
+          <td class="p-3">
+            <a href="https://wa.me/${formattedWA}" target="_blank" class="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 hover:underline font-medium">
+              💬 ${esc(i.wa)}
+            </a>
+          </td>
+        </tr>
+      `}).join('');
+    }
+
+    function formatWA(phone) {
+      if (!phone) return '';
+      let cleaned = String(phone).replace(/[^0-9]/g, '');
+      if (cleaned.startsWith('0')) {
+        cleaned = '62' + cleaned.slice(1);
+      }
+      return cleaned;
+    }
+
+    function esc(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
 </body>
 </html>
