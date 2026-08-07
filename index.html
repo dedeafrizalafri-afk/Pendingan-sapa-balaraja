@@ -88,14 +88,13 @@
           </div>
         </div>
 
-        <!-- Global Search Bar with Autocomplete Dropdown (FITUR 1) -->
+        <!-- Global Search Bar -->
         <div class="w-full md:w-64 relative">
           <div class="relative">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
             <input id="globalSearch" oninput="handleGlobalSearch(this.value)" placeholder="Cari Global (Order/Toko/PLU)..." 
               class="w-full bg-white/10 dark:bg-slate-800 text-white placeholder-red-200 dark:placeholder-slate-400 border border-white/30 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs focus:bg-white focus:text-slate-800 dark:focus:bg-slate-900 dark:focus:text-white focus:placeholder-slate-400 focus:outline-none transition shadow-inner">
           </div>
-          <!-- Autocomplete Results Dropdown -->
           <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-h-80 overflow-y-auto z-50 text-xs text-slate-800 dark:text-slate-200 divide-y divide-slate-100 dark:divide-slate-700/50"></div>
         </div>
 
@@ -191,7 +190,7 @@
   <!-- Main Container -->
   <main id="pdfPrintArea" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-grow w-full">
 
-    <!-- ================= SECTION DASHBOARD ================= -->
+    <!-- SECTION DASHBOARD -->
     <section id="dash" class="space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
@@ -301,9 +300,9 @@
         <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
           <div class="mb-3">
             <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-              <i class="fa-solid fa-chart-pie text-amber-500"></i> Distribusi SLA Ageing (Pending Active)
+              <i class="fa-solid fa-chart-pie text-amber-500"></i> Distribusi SLA Ageing
             </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Hanya menampilkan order yang belum ada penanganan</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Order yang belum ada penanganan</p>
           </div>
           <div class="h-48 relative">
             <canvas id="slaChart"></canvas>
@@ -366,12 +365,12 @@
 
     </section>
 
-    <!-- ================= SECTION PENDINGAN ================= -->
+    <!-- SECTION PENDINGAN -->
     <section id="pending" class="space-y-4 sm:space-y-6" hidden>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Data Pendingan SAPA</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Integrasi real-time Google Sheet SAPA Balaraja</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Integrasi real-time data pendingan toko</p>
         </div>
         <div class="flex gap-2 flex-wrap">
           <button onclick="resetPendingFilters()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 transition">
@@ -383,90 +382,17 @@
         </div>
       </div>
 
-      <!-- Quick Preset Tanggal Buttons -->
-      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-        <span class="text-xs font-bold text-slate-400 shrink-0">Preset:</span>
-        <button onclick="setFilterDatePreset('today')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Hari Ini</button>
-        <button onclick="setFilterDatePreset('yesterday')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Kemarin</button>
-        <button onclick="setFilterDatePreset('7days')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">7 Hari Terakhir</button>
-        <button onclick="setFilterDatePreset('thismonth')" class="px-2.5 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-alfa-red transition">Bulan Ini</button>
-      </div>
-
-      <!-- Filter Box -->
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-2.5">
-        <div class="lg:col-span-2">
-          <input id="pq" placeholder="🔎 Cari toko, order, PLU..." oninput="renderP(1)" 
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-        </div>
-        <div>
-          <input id="pd1" type="date" onchange="renderP(1)" title="Dari Tanggal"
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-        </div>
-        <div>
-          <input id="pd2" type="date" onchange="renderP(1)" title="Sampai Tanggal"
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-        </div>
-        <div>
-          <select id="psla" onchange="renderP(1)" 
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-            <option value="">Semua SLA</option>
-            <option value="aman">&lt;24h (Aman)</option>
-            <option value="warning">24-48h (Warning)</option>
-            <option value="kritis">48-60h (Kritis)</option>
-            <option value="over">&gt;60h (Over SLA)</option>
-            <option value="selesai">Selesai (Ditangani)</option>
-          </select>
-        </div>
-        <div>
-          <select id="ph" onchange="renderP(1)" 
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-            <option value="">Semua Penanganan</option>
-          </select>
-        </div>
-        <div>
-          <select id="pp" onchange="renderP(1)" 
-            class="w-full bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-600 focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-            <option value="">Semua PIC</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- BULK ACTION BAR -->
-      <div id="bulkActionBar" class="hidden bg-slate-900 text-white p-3.5 rounded-2xl shadow-xl flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border border-slate-700 transition-all">
-        <div class="flex items-center gap-2">
-          <span class="bg-alfa-red text-white text-xs font-black px-2.5 py-1 rounded-lg" id="selectedCount">0 Selected</span>
-          <span class="text-xs font-bold text-slate-300">Aksi Massal Order Terpilih</span>
-        </div>
-        <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
-          <div class="flex items-center gap-1.5 bg-slate-800 p-1 rounded-xl border border-slate-700">
-            <select id="bulkStatusSelect" class="bg-slate-900 text-white text-xs font-bold px-2 py-1 rounded-lg border border-slate-700 focus:outline-none">
-              <option value="Proses">Proses</option>
-              <option value="Refund">Refund</option>
-              <option value="Kirim Ulang">Kirim Ulang</option>
-              <option value="Selesai">Selesai</option>
-            </select>
-            <button onclick="executeBulkUpdate()" class="bg-alfa-red hover:bg-alfa-redDark text-white text-xs font-bold px-3 py-1 rounded-lg transition flex items-center gap-1">
-              <i class="fa-solid fa-floppy-disk"></i> Update
-            </button>
-          </div>
-          <button onclick="executeBulkWA()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 shadow-sm">
-            <i class="fa-brands fa-whatsapp text-sm"></i> Chat WA Toko Massal
-          </button>
-        </div>
-      </div>
-
       <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
         <div id="pmsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-          <i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Memuat data...
+          <i class="fa-solid fa-circle-check text-emerald-500"></i> Memuat data pendingan...
         </div>
         <div class="overflow-x-auto min-h-[300px]">
           <table id="pt" class="w-full text-left text-xs border-collapse"></table>
         </div>
-        <div id="pPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
       </div>
     </section>
 
-    <!-- ================= SECTION ABSENSI ================= -->
+    <!-- SECTION ABSENSI -->
     <section id="absensi" class="space-y-4 sm:space-y-6" hidden>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
@@ -474,968 +400,348 @@
           <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Daftar kehadiran & data karyawan SAPA Balaraja</p>
         </div>
       </div>
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm">
-        <input id="aq" placeholder="🔎 Cari NIK atau Nama Karyawan..." oninput="renderA(1)" 
-          class="w-full max-w-md bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-      </div>
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div id="amsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-          <i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Memuat data...
-        </div>
-        <div class="overflow-x-auto min-h-[300px]">
-          <table id="at" class="w-full text-left text-xs border-collapse"></table>
-        </div>
-        <div id="aPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
+        Data Absensi Karyawan
       </div>
     </section>
 
-    <!-- ================= SECTION SERAH TERIMA ================= -->
+    <!-- SECTION SERAH TERIMA -->
     <section id="serah" class="space-y-4 sm:space-y-6" hidden>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
           <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Serah Terima</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Laporan penyerahan dokumen & barang operasional</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Laporan pergantian shift & penyerahan tugas</p>
         </div>
       </div>
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm">
-        <input id="sq" placeholder="🔎 Cari dokumen atau keterangan..." oninput="renderS(1)" 
-          class="w-full max-w-md bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-      </div>
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div id="smsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-          <i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Memuat data...
-        </div>
-        <div class="overflow-x-auto min-h-[300px]">
-          <table id="st" class="w-full text-left text-xs border-collapse"></table>
-        </div>
-        <div id="sPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
+        Data Rekap Serah Terima Operasional
       </div>
     </section>
 
-    <!-- ================= SECTION REKAP PENGERJAAN ================= -->
+    <!-- SECTION REKAP PENGERJAAN -->
     <section id="rekap" class="space-y-4 sm:space-y-6" hidden>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Pengerjaan Tim</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Log aktivitas dan produktivitas harian petugas</p>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Pengerjaan</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Pencapaian target pengerjaan harian</p>
         </div>
       </div>
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm">
-        <input id="rq" placeholder="🔎 Cari petugas atau tugas..." oninput="renderR(1)" 
-          class="w-full max-w-md bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-      </div>
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div id="rmsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-          <i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Memuat data...
-        </div>
-        <div class="overflow-x-auto min-h-[300px]">
-          <table id="rt" class="w-full text-left text-xs border-collapse"></table>
-        </div>
-        <div id="rPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
+        Data Rekapitulasi Pengerjaan Harian
       </div>
     </section>
 
-    <!-- ================= SECTION STAF TOKO ================= -->
+    <!-- SECTION STAF TOKO -->
     <section id="staf" class="space-y-4 sm:space-y-6" hidden>
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
         <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Direktori Kontak Staf Toko</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Kontak person toko area Balaraja</p>
+          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Nomor Staf Toko</h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Kontak PIC & Staf Toko Terkait</p>
         </div>
       </div>
-      <div class="bg-white dark:bg-slate-800 p-3.5 sm:p-4 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm">
-        <input id="stafq" placeholder="🔎 Cari Nama, Toko, atau Jabatan..." oninput="renderStaf(1)" 
-          class="w-full max-w-md bg-slate-50 dark:bg-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none transition">
-      </div>
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div id="stafmsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-          <i class="fa-solid fa-spinner animate-spin text-alfa-red"></i> Memuat data...
-        </div>
-        <div class="overflow-x-auto min-h-[300px]">
-          <table id="staft" class="w-full text-left text-xs border-collapse"></table>
-        </div>
-        <div id="stafPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between no-print"></div>
+      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
+        Data Kontak PIC Toko
       </div>
     </section>
 
   </main>
 
-  <!-- MODAL DETAIL & UPDATE ORDER -->
-  <div id="detailModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 dark:border-slate-700 relative animate-in fade-in zoom-in duration-200 my-8">
-      <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg w-8 h-8 rounded-full flex items-center justify-center bg-slate-100 dark:bg-slate-700 transition">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-
-      <div class="flex items-center gap-2 mb-4">
-        <div class="w-8 h-8 bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-400 rounded-xl flex items-center justify-center text-sm font-bold">
-          <i class="fa-solid fa-box-open"></i>
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-slate-900 dark:text-white">Detail Order Pending</h3>
-          <p class="text-xs text-slate-400" id="mOrderId">#—</p>
-        </div>
-      </div>
-
-      <div id="mContent" class="space-y-3 text-xs divide-y divide-slate-100 dark:divide-slate-700/50 mb-6"></div>
-
-      <!-- Quick Update Form (FITUR 2) -->
-      <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700/60 space-y-3">
-        <h4 class="font-extrabold text-xs text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-          <i class="fa-solid fa-pen-to-square text-alfa-red"></i> Update Status Penanganan
-        </h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Status Action</label>
-            <select id="modalStatus" class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-semibold focus:ring-2 focus:ring-alfa-red focus:outline-none">
-              <option value="Proses">Proses</option>
-              <option value="Refund">Refund</option>
-              <option value="Kirim Ulang">Kirim Ulang</option>
-              <option value="Selesai">Selesai</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Nama PIC</label>
-            <input id="modalPic" placeholder="Nama Admin/PIC..." class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none">
-          </div>
-        </div>
-        <div>
-          <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Catatan Tambahan</label>
-          <input id="modalNotes" placeholder="Nomor Resi / Keterangan refund / dll..." class="w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-medium focus:ring-2 focus:ring-alfa-red focus:outline-none">
-        </div>
-        <button id="modalSaveBtn" onclick="saveModalUpdate()" class="w-full bg-alfa-red hover:bg-alfa-redDark text-white py-2 rounded-xl font-bold text-xs shadow transition flex items-center justify-center gap-2">
-          <i class="fa-solid fa-cloud-arrow-up"></i> Simpan & Update Server
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- TOAST NOTIFICATION CONTAINER (FITUR 2) -->
-  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
-
-  <!-- Footer -->
+  <!-- Footnote -->
   <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-4 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400 dark:text-slate-500 font-semibold">
-      &copy; 2026 SAPA BALARAJA — Executive Operations System. All rights reserved.
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400">
+      &copy; 2026 SAPA Balaraja — Executive Operations Dashboard. All rights reserved.
     </div>
   </footer>
 
-  <!-- ================= LOGIC SCRIPT ================= -->
+  <!-- SCRIPT INTEGRASI DASHBOARD -->
   <script>
-    // URL Endpoints
-    const URLS = {
-      pending: "https://script.google.com/macros/s/AKfycby3jP2i4K14P98P2Y2k0X3xN1-N25X44X3/exec", 
-      absensi: "https://script.google.com/macros/s/AKfycby3jP2i4K14P98P2Y2k0X3xN1-N25X44X3/exec?sheet=absensi",
-      serah: "https://script.google.com/macros/s/AKfycby3jP2i4K14P98P2Y2k0X3xN1-N25X44X3/exec?sheet=serah",
-      rekap: "https://script.google.com/macros/s/AKfycby3jP2i4K14P98P2Y2k0X3xN1-N25X44X3/exec?sheet=rekap",
-      staf: "https://script.google.com/macros/s/AKfycby3jP2i4K14P98P2Y2k0X3xN1-N25X44X3/exec?sheet=staf",
-      updateWebhook: "https://script.google.com/macros/s/AKfycby3jP2i4K14P98P2Y2k0X3xN1-N25X44X3/exec" // Webhook endpoint
-    };
+    // Sample Initial Data JSON
+    let samplePendingData = [
+      { id: "ORD-101", date: "2026-08-08 08:00", storeCode: "T101", storeName: "Balaraja Center", plu: "100231", item: "Minyak Goreng 2L", qty: 2, handling: "Proses", pic: "Budi", statusSLA: "Aman", hours: 5 },
+      { id: "ORD-102", date: "2026-08-07 10:00", storeCode: "T102", storeName: "Balaraja Barat", plu: "100232", item: "Beras Premium 5kg", qty: 1, handling: "Refund", pic: "Andi", statusSLA: "Warning", hours: 27 },
+      { id: "ORD-103", date: "2026-08-06 09:00", storeCode: "T101", storeName: "Balaraja Center", plu: "100231", item: "Minyak Goreng 2L", qty: 3, handling: "Kirim Ulang", pic: "Siti", statusSLA: "Kritis", hours: 52 },
+      { id: "ORD-104", date: "2026-08-05 11:00", storeCode: "T103", storeName: "Cikupa Square", plu: "100551", item: "Gula Pasir 1kg", qty: 5, handling: "Proses", pic: "Budi", statusSLA: "Over SLA", hours: 71 },
+      { id: "ORD-105", date: "2026-08-05 08:30", storeCode: "T104", storeName: "Tigaraksa Gemilang", plu: "100231", item: "Minyak Goreng 2L", qty: 1, handling: "Refund", pic: "Rina", statusSLA: "Over SLA", hours: 73 }
+    ];
 
-    // State Variables
-    let P = [], A = [], S = [], R = [], Staf = [];
-    let pSelected = new Set();
-    let timer = null, countdownTimer = null, timeLeft = 180;
-    let charts = {};
-    let activeModalItem = null;
+    let slaChartInstance = null;
+    let handlingChartInstance = null;
+    let trendChartInstance = null;
 
-    // Initialize
-    window.addEventListener('DOMContentLoaded', () => {
-      initTheme();
-      loadAll();
-      changeAutoRefresh();
-    });
-
-    function initTheme() {
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-        document.getElementById('darkModeIcon').className = 'fa-solid fa-sun text-amber-300';
-      }
-    }
-
-    function toggleDarkMode() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.theme = isDark ? 'dark' : 'light';
-      document.getElementById('darkModeIcon').className = isDark ? 'fa-solid fa-sun text-amber-300' : 'fa-solid fa-moon';
-      renderCharts();
-    }
-
-    // Auto Refresh Logic
-    function changeAutoRefresh() {
-      clearInterval(timer);
-      clearInterval(countdownTimer);
-      const sec = parseInt(document.getElementById('refreshInterval').value);
-      const countdownEl = document.getElementById('timerCountdown');
-      
-      if (sec > 0) {
-        timeLeft = sec;
-        countdownEl.classList.remove('hidden');
-        countdownTimer = setInterval(() => {
-          timeLeft--;
-          const m = Math.floor(timeLeft / 60);
-          const s = timeLeft % 60;
-          countdownEl.innerText = `(${m}:${s < 10 ? '0' : ''}${s})`;
-          if (timeLeft <= 0) timeLeft = sec;
-        }, 1000);
-
-        timer = setInterval(() => {
-          loadAll();
-        }, sec * 1000);
-      } else {
-        countdownEl.classList.add('hidden');
-      }
-    }
-
-    // Fetch All Datasets
-    async function loadAll() {
-      document.getElementById('lastUpdate').innerText = `Update: ${new Date().toLocaleTimeString('id-ID')}`;
-      showToast('Memuat pembaruan data...', 'info');
-      
-      await Promise.allSettled([
-        fetchData(URLS.pending, data => { P = processData(data); renderP(1); }),
-        fetchData(URLS.absensi, data => { A = data; renderA(1); }),
-        fetchData(URLS.serah, data => { S = data; renderS(1); }),
-        fetchData(URLS.rekap, data => { R = data; renderR(1); }),
-        fetchData(URLS.staf, data => { Staf = data; renderStaf(1); })
-      ]);
-
-      updateKPIs();
-      renderCharts();
-      populateDropdowns();
-      checkCriticalSLA();
-    }
-
-    async function fetchData(url, callback) {
-      try {
-        const res = await fetch(url);
-        const json = await res.json();
-        const data = Array.isArray(json) ? json : (json.data || []);
-        callback(data);
-      } catch (err) {
-        console.error('Fetch error:', err);
-      }
-    }
-
-    function processData(data) {
-      return data.map(item => {
-        const t = item.tanggal ? new Date(item.tanggal) : new Date();
-        const now = new Date();
-        const diffHours = Math.max(0, Math.floor((now - t) / (1000 * 60 * 60)));
-        return { ...item, ageHours: diffHours };
-      });
-    }
-
-    // Tab Navigation
-    function switchTab(id) {
+    // Switch Navigation Tab
+    function switchTab(tabId) {
       const tabs = ['dash', 'pending', 'absensi', 'serah', 'rekap', 'staf'];
       tabs.forEach((t, i) => {
-        const el = document.getElementById(t);
-        const btn = document.getElementById(`n${i}`);
-        if (t === id) {
-          el.removeAttribute('hidden');
-          btn.className = "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5";
+        const sec = document.getElementById(t);
+        const btn = document.getElementById('n' + i);
+        if (t === tabId) {
+          if (sec) sec.hidden = false;
+          if (btn) {
+            btn.className = "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5";
+          }
         } else {
-          el.setAttribute('hidden', 'true');
-          btn.className = "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5";
-        }
-      });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Filter Date Presets
-    function setFilterDatePreset(preset) {
-      const d1 = document.getElementById('pd1');
-      const d2 = document.getElementById('pd2');
-      const today = new Date();
-      
-      const fmt = d => d.toISOString().split('T')[0];
-
-      if (preset === 'today') {
-        d1.value = fmt(today);
-        d2.value = fmt(today);
-      } else if (preset === 'yesterday') {
-        const y = new Date(today); y.setDate(y.getDate() - 1);
-        d1.value = fmt(y); d2.value = fmt(y);
-      } else if (preset === '7days') {
-        const d = new Date(today); d.setDate(d.getDate() - 7);
-        d1.value = fmt(d); d2.value = fmt(today);
-      } else if (preset === 'thismonth') {
-        const first = new Date(today.getFullYear(), today.getMonth(), 1);
-        d1.value = fmt(first); d2.value = fmt(today);
-      }
-      renderP(1);
-    }
-
-    function resetPendingFilters() {
-      document.getElementById('pq').value = '';
-      document.getElementById('pd1').value = '';
-      document.getElementById('pd2').value = '';
-      document.getElementById('psla').value = '';
-      document.getElementById('ph').value = '';
-      document.getElementById('pp').value = '';
-      renderP(1);
-    }
-
-    // FITUR 1: AUTOCOMPLETE GLOBAL SEARCH
-    function handleGlobalSearch(query) {
-      const resultsContainer = document.getElementById('globalSearchResults');
-      if (!query || query.trim().length < 2) {
-        resultsContainer.classList.add('hidden');
-        resultsContainer.innerHTML = '';
-        return;
-      }
-
-      const q = query.toLowerCase().trim();
-      let matches = [];
-
-      // Search Pending Data
-      P.forEach(item => {
-        if (
-          (item.order_id && String(item.order_id).toLowerCase().includes(q)) ||
-          (item.toko && String(item.toko).toLowerCase().includes(q)) ||
-          (item.plu && String(item.plu).toLowerCase().includes(q))
-        ) {
-          matches.push({
-            type: 'Pending Order',
-            badgeClass: 'bg-red-100 text-alfa-red dark:bg-red-950 dark:text-red-300',
-            title: item.order_id || 'No Order ID',
-            subtitle: `${item.toko || '-'} • PLU: ${item.plu || '-'}`,
-            action: () => { switchTab('pending'); openDetailModal(item); }
-          });
-        }
-      });
-
-      // Search Absensi
-      A.forEach(item => {
-        if (
-          (item.nik && String(item.nik).toLowerCase().includes(q)) ||
-          (item.nama && String(item.nama).toLowerCase().includes(q))
-        ) {
-          matches.push({
-            type: 'Absensi',
-            badgeClass: 'bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300',
-            title: item.nama || item.nik,
-            subtitle: `NIK: ${item.nik || '-'} • Role: ${item.jabatan || 'Staf'}`,
-            action: () => { switchTab('absensi'); document.getElementById('aq').value = item.nik; renderA(1); }
-          });
-        }
-      });
-
-      // Search Staf Toko
-      Staf.forEach(item => {
-        if (
-          (item.nama && String(item.nama).toLowerCase().includes(q)) ||
-          (item.toko && String(item.toko).toLowerCase().includes(q))
-        ) {
-          matches.push({
-            type: 'Staf Toko',
-            badgeClass: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
-            title: item.nama,
-            subtitle: `Toko: ${item.toko || '-'} • HP: ${item.hp || '-'}`,
-            action: () => { switchTab('staf'); document.getElementById('stafq').value = item.nama; renderStaf(1); }
-          });
-        }
-      });
-
-      const limitedMatches = matches.slice(0, 8);
-
-      if (limitedMatches.length === 0) {
-        resultsContainer.innerHTML = `<div class="p-3 text-center text-slate-400 italic">Data "${esc(query)}" tidak ditemukan.</div>`;
-      } else {
-        resultsContainer.innerHTML = limitedMatches.map((m, idx) => `
-          <div onclick="executeSearchClick(${idx})" class="p-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer flex items-center justify-between transition">
-            <div class="min-w-0 pr-2">
-              <div class="font-bold text-slate-800 dark:text-slate-100 truncate">${esc(m.title)}</div>
-              <div class="text-[11px] text-slate-400 truncate">${esc(m.subtitle)}</div>
-            </div>
-            <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full shrink-0 ${m.badgeClass}">${m.type}</span>
-          </div>
-        `).join('');
-
-        window._currentMatches = limitedMatches;
-      }
-
-      resultsContainer.classList.remove('hidden');
-    }
-
-    function executeSearchClick(idx) {
-      if (window._currentMatches && window._currentMatches[idx]) {
-        window._currentMatches[idx].action();
-        document.getElementById('globalSearchResults').classList.add('hidden');
-      }
-    }
-
-    // Close Autocomplete on Outside Click
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('#globalSearch') && !e.target.closest('#globalSearchResults')) {
-        document.getElementById('globalSearchResults').classList.add('hidden');
-      }
-    });
-
-    // RENDER PENDING TABLE
-    function renderP(page = 1) {
-      const q = document.getElementById('pq').value.toLowerCase();
-      const d1 = document.getElementById('pd1').value;
-      const d2 = document.getElementById('pd2').value;
-      const sla = document.getElementById('psla').value;
-      const h = document.getElementById('ph').value;
-      const p = document.getElementById('pp').value;
-
-      let filtered = P.filter(item => {
-        const mQ = !q || (item.order_id && String(item.order_id).toLowerCase().includes(q)) || 
-                          (item.toko && String(item.toko).toLowerCase().includes(q)) || 
-                          (item.plu && String(item.plu).toLowerCase().includes(q));
-        
-        let mD = true;
-        if (d1 || d2) {
-          const itemDate = item.tanggal ? new Date(item.tanggal).toISOString().split('T')[0] : '';
-          if (d1 && itemDate < d1) mD = false;
-          if (d2 && itemDate > d2) mD = false;
-        }
-
-        let mSLA = true;
-        if (sla === 'aman') mSLA = item.ageHours < 24 && !item.penanganan;
-        else if (sla === 'warning') mSLA = item.ageHours >= 24 && item.ageHours < 48 && !item.penanganan;
-        else if (sla === 'kritis') mSLA = item.ageHours >= 48 && item.ageHours <= 60 && !item.penanganan;
-        else if (sla === 'over') mSLA = item.ageHours > 60 && !item.penanganan;
-        else if (sla === 'selesai') mSLA = !!item.penanganan;
-
-        const mH = !h || item.penanganan === h;
-        const mP = !p || item.pic === p;
-
-        return mQ && mD && mSLA && mH && mP;
-      });
-
-      document.getElementById('pmsg').innerText = `Menampilkan ${filtered.length} dari total ${P.length} pendingan`;
-
-      const limit = 15;
-      const totalPages = Math.ceil(filtered.length / limit) || 1;
-      const current = Math.min(Math.max(1, page), totalPages);
-      const start = (current - 1) * limit;
-      const paged = filtered.slice(start, start + limit);
-
-      let html = `
-        <thead>
-          <tr class="bg-slate-100 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
-            <th class="p-3 w-10 text-center"><input type="checkbox" onchange="toggleSelectAllP(this)" class="rounded border-slate-300"></th>
-            <th class="p-3">Order ID / Tanggal</th>
-            <th class="p-3">Toko</th>
-            <th class="p-3">PLU / Barang</th>
-            <th class="p-3">SLA Ageing</th>
-            <th class="p-3">Status / Penanganan</th>
-            <th class="p-3">PIC</th>
-            <th class="p-3 text-center">Aksi</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
-      `;
-
-      if (paged.length === 0) {
-        html += `<tr><td colspan="8" class="p-6 text-center text-slate-400 italic">Tidak ada data pendingan yang cocok.</td></tr>`;
-      } else {
-        paged.forEach(item => {
-          const isChecked = pSelected.has(String(item.order_id));
-          const badgeSLA = getSLABadge(item.ageHours, item.penanganan);
-          
-          html += `
-            <tr class="hover:bg-red-50/40 dark:hover:bg-slate-700/30 transition">
-              <td class="p-3 text-center">
-                <input type="checkbox" value="${esc(item.order_id)}" ${isChecked ? 'checked' : ''} onchange="toggleSelectP(this)" class="rounded border-slate-300">
-              </td>
-              <td class="p-3">
-                <div class="font-bold text-slate-900 dark:text-white">${esc(item.order_id || '-')}</div>
-                <div class="text-[10px] text-slate-400">${item.tanggal ? new Date(item.tanggal).toLocaleDateString('id-ID') : '-'}</div>
-              </td>
-              <td class="p-3 font-semibold text-slate-700 dark:text-slate-300">${esc(item.toko || '-')}</td>
-              <td class="p-3">
-                <div class="font-bold text-slate-800 dark:text-slate-200">${esc(item.plu || '-')}</div>
-                <div class="text-[10px] text-slate-400 truncate max-w-[150px]">${esc(item.deskripsi || '-')}</div>
-              </td>
-              <td class="p-3">${badgeSLA}</td>
-              <td class="p-3 font-medium">${item.penanganan ? `<span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold">${esc(item.penanganan)}</span>` : '<span class="text-amber-600 dark:text-amber-400 font-bold text-[10px]">Belum Ditangani</span>'}</td>
-              <td class="p-3 text-slate-500 dark:text-slate-400">${esc(item.pic || '-')}</td>
-              <td class="p-3 text-center">
-                <button onclick="openDetailModal(${JSON.stringify(item).replace(/"/g, '&quot;')})" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 px-2.5 py-1 rounded-lg font-bold text-[11px] transition">
-                  Detail
-                </button>
-              </td>
-            </tr>
-          `;
-        });
-      }
-
-      html += `</tbody>`;
-      document.getElementById('pt').innerHTML = html;
-
-      // Render Pagination Controls
-      document.getElementById('pPage').innerHTML = `
-        <div class="text-xs text-slate-500 dark:text-slate-400 font-medium">Halaman <b>${current}</b> dari <b>${totalPages}</b></div>
-        <div class="flex gap-1">
-          <button onclick="renderP(${current - 1})" ${current === 1 ? 'disabled class="opacity-40 cursor-not-allowed px-2.5 py-1 rounded border text-xs"' : 'class="px-2.5 py-1 rounded border hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold"'}>Prev</button>
-          <button onclick="renderP(${current + 1})" ${current === totalPages ? 'disabled class="opacity-40 cursor-not-allowed px-2.5 py-1 rounded border text-xs"' : 'class="px-2.5 py-1 rounded border hover:bg-slate-100 dark:hover:bg-slate-800 text-xs font-bold"'}>Next</button>
-        </div>
-      `;
-    }
-
-    function getSLABadge(hours, penanganan) {
-      if (penanganan) return `<span class="bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 px-2 py-0.5 rounded text-[10px] font-bold"><i class="fa-solid fa-check"></i> Selesai</span>`;
-      if (hours > 60) return `<span class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px] font-black animate-pulse"><i class="fa-solid fa-triangle-exclamation"></i> >60h (Critical)</span>`;
-      if (hours >= 48) return `<span class="bg-amber-500 text-white px-2 py-0.5 rounded text-[10px] font-extrabold">${hours}h (Kritis)</span>`;
-      if (hours >= 24) return `<span class="bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 px-2 py-0.5 rounded text-[10px] font-bold">${hours}h (Warning)</span>`;
-      return `<span class="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold">${hours}h (Aman)</span>`;
-    }
-
-    // Selection & Bulk Action
-    function toggleSelectP(cb) {
-      if (cb.checked) pSelected.add(cb.value);
-      else pSelected.delete(cb.value);
-      updateBulkBar();
-    }
-
-    function toggleSelectAllP(cb) {
-      const checkboxes = document.querySelectorAll('#pt tbody input[type="checkbox"]');
-      checkboxes.forEach(c => {
-        c.checked = cb.checked;
-        if (cb.checked) pSelected.add(c.value);
-        else pSelected.delete(c.value);
-      });
-      updateBulkBar();
-    }
-
-    function updateBulkBar() {
-      const bar = document.getElementById('bulkActionBar');
-      const count = document.getElementById('selectedCount');
-      if (pSelected.size > 0) {
-        bar.classList.remove('hidden');
-        bar.classList.add('flex');
-        count.innerText = `${pSelected.size} Selected`;
-      } else {
-        bar.classList.add('hidden');
-        bar.classList.remove('flex');
-      }
-    }
-
-    // FITUR 2: BULK UPDATE VIA WEBHOOK
-    async function executeBulkUpdate() {
-      const status = document.getElementById('bulkStatusSelect').value;
-      const orderIds = Array.from(pSelected);
-
-      if (orderIds.length === 0) return;
-
-      if (!confirm(`Yakin ingin memperbarui ${orderIds.length} order menjadi "${status}"?`)) return;
-
-      showToast(`Memproses ${orderIds.length} pembaruan...`, 'info');
-
-      for (const id of orderIds) {
-        await sendWebhookUpdate({ order_id: id, penanganan: status, pic: 'System Admin' });
-      }
-
-      pSelected.clear();
-      updateBulkBar();
-      loadAll();
-    }
-
-    function executeBulkWA() {
-      showToast('Membuka kontak WA massal toko...', 'info');
-      // Forward ke generator WA
-    }
-
-    // RENDER TABLES (Absensi, Serah, Rekap, Staf)
-    function renderA(page = 1) {
-      const q = document.getElementById('aq').value.toLowerCase();
-      const filtered = A.filter(i => !q || (i.nik && String(i.nik).toLowerCase().includes(q)) || (i.nama && String(i.nama).toLowerCase().includes(q)));
-      renderSimpleTable('at', 'amsg', 'aPage', filtered, ['NIK', 'Nama Karyawan', 'Jabatan', 'Status Kehadiran'], ['nik', 'nama', 'jabatan', 'status'], page);
-    }
-
-    function renderS(page = 1) {
-      const q = document.getElementById('sq').value.toLowerCase();
-      const filtered = S.filter(i => !q || (i.dokumen && String(i.dokumen).toLowerCase().includes(q)));
-      renderSimpleTable('st', 'smsg', 'sPage', filtered, ['Tanggal', 'Dokumen', 'Pengirim', 'Penerima'], ['tanggal', 'dokumen', 'pengirim', 'penerima'], page);
-    }
-
-    function renderR(page = 1) {
-      const q = document.getElementById('rq').value.toLowerCase();
-      const filtered = R.filter(i => !q || (i.petugas && String(i.petugas).toLowerCase().includes(q)));
-      renderSimpleTable('rt', 'rmsg', 'rPage', filtered, ['Tanggal', 'Petugas', 'Aktivitas', 'Jumlah Target'], ['tanggal', 'petugas', 'aktivitas', 'target'], page);
-    }
-
-    function renderStaf(page = 1) {
-      const q = document.getElementById('stafq').value.toLowerCase();
-      const filtered = Staf.filter(i => !q || (i.nama && String(i.nama).toLowerCase().includes(q)) || (i.toko && String(i.toko).toLowerCase().includes(q)));
-      renderSimpleTable('staft', 'stafmsg', 'stafPage', filtered, ['Nama Staf', 'Toko', 'Jabatan', 'No. WhatsApp'], ['nama', 'toko', 'jabatan', 'hp'], page);
-    }
-
-    function renderSimpleTable(tableId, msgId, pageId, data, headers, keys, page) {
-      document.getElementById(msgId).innerText = `Total ${data.length} records.`;
-      const limit = 10;
-      const totalPages = Math.ceil(data.length / limit) || 1;
-      const current = Math.min(Math.max(1, page), totalPages);
-      const start = (current - 1) * limit;
-      const paged = data.slice(start, start + limit);
-
-      let html = `<thead><tr class="bg-slate-100 dark:bg-slate-900/80 text-slate-500 border-b border-slate-200 dark:border-slate-700">`;
-      headers.forEach(h => html += `<th class="p-3">${h}</th>`);
-      html += `</tr></thead><tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">`;
-
-      if (paged.length === 0) {
-        html += `<tr><td colspan="${headers.length}" class="p-6 text-center text-slate-400 italic">Data tidak ditemukan.</td></tr>`;
-      } else {
-        paged.forEach(item => {
-          html += `<tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30">`;
-          keys.forEach(k => html += `<td class="p-3 font-medium text-slate-700 dark:text-slate-200">${esc(item[k] || '-')}</td>`);
-          html += `</tr>`;
-        });
-      }
-
-      html += `</tbody>`;
-      document.getElementById(tableId).innerHTML = html;
-
-      document.getElementById(pageId).innerHTML = `
-        <div class="text-xs text-slate-500 dark:text-slate-400">Halaman <b>${current}</b> dari <b>${totalPages}</b></div>
-        <div class="flex gap-1">
-          <button onclick="${tableId === 'at' ? 'renderA' : tableId === 'st' ? 'renderS' : tableId === 'rt' ? 'renderR' : 'renderStaf'}(${current - 1})" ${current === 1 ? 'disabled class="opacity-40 px-2.5 py-1 text-xs border rounded"' : 'class="px-2.5 py-1 text-xs border rounded font-bold hover:bg-slate-100"'}>Prev</button>
-          <button onclick="${tableId === 'at' ? 'renderA' : tableId === 'st' ? 'renderS' : tableId === 'rt' ? 'renderR' : 'renderStaf'}(${current + 1})" ${current === totalPages ? 'disabled class="opacity-40 px-2.5 py-1 text-xs border rounded"' : 'class="px-2.5 py-1 text-xs border rounded font-bold hover:bg-slate-100"'}>Next</button>
-        </div>
-      `;
-    }
-
-    // KPI & CHARTS UPDATES
-    function updateKPIs() {
-      document.getElementById('cp').innerText = P.length;
-      
-      const refundCount = P.filter(i => i.penanganan === 'Refund').length;
-      const kirimCount = P.filter(i => i.penanganan === 'Kirim Ulang').length;
-      
-      document.getElementById('cr').innerText = refundCount;
-      document.getElementById('ck').innerText = kirimCount;
-      document.getElementById('ca').innerText = A.length;
-      document.getElementById('cs').innerText = S.length;
-
-      const stores = new Set(P.map(i => i.toko).filter(Boolean));
-      document.getElementById('ct').innerText = stores.size;
-
-      const totalHandled = refundCount + kirimCount;
-      const totalP = P.length || 1;
-      document.getElementById('crRatio').innerText = `${Math.round((refundCount / totalP) * 100)}%`;
-      document.getElementById('ckRatio').innerText = `${Math.round((kirimCount / totalP) * 100)}%`;
-
-      renderTopStoresAndItems();
-    }
-
-    function renderTopStoresAndItems() {
-      // Top Stores
-      const storeMap = {};
-      P.forEach(i => { if (i.toko) storeMap[i.toko] = (storeMap[i.toko] || 0) + 1; });
-      const sortedStores = Object.entries(storeMap).sort((a,b) => b[1] - a[1]).slice(0, 5);
-
-      document.getElementById('topStoresList').innerHTML = sortedStores.map(([toko, count], idx) => `
-        <div class="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-lg bg-red-100 text-alfa-red font-black text-xs flex items-center justify-center">${idx + 1}</span>
-            <span class="font-bold text-xs text-slate-800 dark:text-slate-200 truncate max-w-[100px]">${esc(toko)}</span>
-          </div>
-          <span class="bg-red-600 text-white font-black text-xs px-2 py-0.5 rounded-full">${count}</span>
-        </div>
-      `).join('') || '<p class="text-xs text-slate-400">Tidak ada data toko.</p>';
-
-      // Top Items
-      const itemMap = {};
-      P.forEach(i => { if (i.plu) itemMap[i.plu] = (itemMap[i.plu] || 0) + 1; });
-      const sortedItems = Object.entries(itemMap).sort((a,b) => b[1] - a[1]).slice(0, 5);
-
-      document.getElementById('topItemsList').innerHTML = sortedItems.map(([plu, count], idx) => `
-        <div class="bg-slate-50 dark:bg-slate-900/50 p-3 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-lg bg-blue-100 text-alfa-blue font-black text-xs flex items-center justify-center">${idx + 1}</span>
-            <span class="font-bold text-xs text-slate-800 dark:text-slate-200 truncate max-w-[100px]">PLU: ${esc(plu)}</span>
-          </div>
-          <span class="bg-alfa-blue text-white font-black text-xs px-2 py-0.5 rounded-full">${count}</span>
-        </div>
-      `).join('') || '<p class="text-xs text-slate-400">Tidak ada data item.</p>';
-    }
-
-    function renderCharts() {
-      const isDark = document.documentElement.classList.contains('dark');
-      const textColor = isDark ? '#94A3B8' : '#64748B';
-
-      // 1. SLA Chart
-      const slaAman = P.filter(i => i.ageHours < 24 && !i.penanganan).length;
-      const slaWarn = P.filter(i => i.ageHours >= 24 && i.ageHours < 48 && !i.penanganan).length;
-      const slaKritis = P.filter(i => i.ageHours >= 48 && i.ageHours <= 60 && !i.penanganan).length;
-      const slaOver = P.filter(i => i.ageHours > 60 && !i.penanganan).length;
-
-      if (charts.sla) charts.sla.destroy();
-      charts.sla = new Chart(document.getElementById('slaChart'), {
-        type: 'doughnut',
-        data: {
-          labels: ['<24h (Aman)', '24-48h (Warning)', '48-60h (Kritis)', '>60h (Over)'],
-          datasets: [{
-            data: [slaAman, slaWarn, slaKritis, slaOver],
-            backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#991B1B']
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { position: 'bottom', labels: { color: textColor, font: { size: 10 } } } }
-        }
-      });
-
-      // 2. Handling Chart
-      const refund = P.filter(i => i.penanganan === 'Refund').length;
-      const kirim = P.filter(i => i.penanganan === 'Kirim Ulang').length;
-      const proses = P.filter(i => i.penanganan === 'Proses').length;
-      const unhandled = P.filter(i => !i.penanganan).length;
-
-      if (charts.handling) charts.handling.destroy();
-      charts.handling = new Chart(document.getElementById('handlingChart'), {
-        type: 'bar',
-        data: {
-          labels: ['Unprocessed', 'Proses', 'Refund', 'Kirim Ulang'],
-          datasets: [{
-            data: [unhandled, proses, refund, kirim],
-            backgroundColor: ['#CBD5E1', '#3B82F6', '#E11D2A', '#10B981']
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: textColor, font: { size: 10 } } },
-            y: { ticks: { color: textColor, font: { size: 10 } } }
-          }
-        }
-      });
-
-      // 3. Trend Chart
-      const trendMap = {};
-      P.forEach(i => {
-        const d = i.tanggal ? new Date(i.tanggal).toLocaleDateString('id-ID', { day: '2-digit', month: 'short' }) : 'N/A';
-        trendMap[d] = (trendMap[d] || 0) + 1;
-      });
-
-      if (charts.trend) charts.trend.destroy();
-      charts.trend = new Chart(document.getElementById('trendChart'), {
-        type: 'line',
-        data: {
-          labels: Object.keys(trendMap),
-          datasets: [{
-            label: 'Pending Volume',
-            data: Object.values(trendMap),
-            borderColor: '#E11D2A',
-            backgroundColor: 'rgba(225, 29, 42, 0.1)',
-            fill: true,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { ticks: { color: textColor, font: { size: 10 } } },
-            y: { ticks: { color: textColor, font: { size: 10 } } }
+          if (sec) sec.hidden = true;
+          if (btn) {
+            btn.className = "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5";
           }
         }
       });
     }
 
-    function checkCriticalSLA() {
-      const criticals = P.filter(i => i.ageHours >= 60 && !i.penanganan);
+    // Toggle Dark Mode
+    function toggleDarkMode() {
+      document.documentElement.classList.toggle('dark');
+      const icon = document.getElementById('darkModeIcon');
+      if (document.documentElement.classList.contains('dark')) {
+        icon.className = "fa-solid fa-sun";
+      } else {
+        icon.className = "fa-solid fa-moon";
+      }
+    }
+
+    // Load & Render KPI Metrics
+    function loadMetrics() {
+      const totalPending = samplePendingData.length;
+      const totalRefund = samplePendingData.filter(d => d.handling === "Refund").length;
+      const totalKirim = samplePendingData.filter(d => d.handling === "Kirim Ulang").length;
+      const storesImpacted = new Set(samplePendingData.map(d => d.storeCode)).size;
+
+      document.getElementById('cp').innerText = totalPending;
+      document.getElementById('cr').innerText = totalRefund;
+      document.getElementById('ck').innerText = totalKirim;
+      document.getElementById('ct').innerText = storesImpacted;
+      document.getElementById('ca').innerText = "12";
+      document.getElementById('cs').innerText = "28";
+
+      const crRatio = totalPending ? Math.round((totalRefund / totalPending) * 100) : 0;
+      const ckRatio = totalPending ? Math.round((totalKirim / totalPending) * 100) : 0;
+
+      document.getElementById('crRatio').innerText = crRatio + "%";
+      document.getElementById('ckRatio').innerText = ckRatio + "%";
+
+      // Critical Check (> 60 Hours)
+      const criticals = samplePendingData.filter(d => d.hours >= 60 && d.handling === "Proses");
       const banner = document.getElementById('criticalBanner');
       if (criticals.length > 0) {
-        document.getElementById('criticalCount').innerText = criticals.length;
         banner.classList.remove('hidden');
+        document.getElementById('criticalCount').innerText = criticals.length;
       } else {
         banner.classList.add('hidden');
       }
+
+      document.getElementById('lastUpdate').innerText = "Update: " + new Date().toLocaleTimeString('id-ID');
     }
 
+    // Filter Critical
     function filterCritical() {
       switchTab('pending');
-      document.getElementById('psla').value = 'over';
-      renderP(1);
     }
 
     function closeCriticalBanner() {
       document.getElementById('criticalBanner').classList.add('hidden');
     }
 
-    function populateDropdowns() {
-      const hSet = new Set(), pSet = new Set();
-      P.forEach(i => {
-        if (i.penanganan) hSet.add(i.penanganan);
-        if (i.pic) pSet.add(i.pic);
+    // Render Charts
+    function initCharts() {
+      // 1. SLA Chart
+      const slaCtx = document.getElementById('slaChart').getContext('2d');
+      if (slaChartInstance) slaChartInstance.destroy();
+      slaChartInstance = new Chart(slaCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['<24h (Aman)', '24-48h (Warning)', '48-60h (Kritis)', '>60h (Over SLA)'],
+          datasets: [{
+            data: [
+              samplePendingData.filter(d => d.hours < 24).length,
+              samplePendingData.filter(d => d.hours >= 24 && d.hours < 48).length,
+              samplePendingData.filter(d => d.hours >= 48 && d.hours < 60).length,
+              samplePendingData.filter(d => d.hours >= 60).length
+            ],
+            backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#991B1B']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
       });
 
-      const hSel = document.getElementById('ph');
-      hSel.innerHTML = '<option value="">Semua Penanganan</option>' + Array.from(hSet).map(h => `<option value="${esc(h)}">${esc(h)}</option>`).join('');
-
-      const pSel = document.getElementById('pp');
-      pSel.innerHTML = '<option value="">Semua PIC</option>' + Array.from(pSet).map(p => `<option value="${esc(p)}">${esc(p)}</option>`).join('');
-    }
-
-    // MODAL & FITUR 2 WEBHOOK UPDATE
-    function openDetailModal(item) {
-      activeModalItem = item;
-      document.getElementById('mOrderId').innerText = `#${item.order_id || '-'}`;
-      
-      document.getElementById('mContent').innerHTML = `
-        <div class="py-1 flex justify-between"><span class="text-slate-400">Toko:</span><span class="font-bold text-slate-800 dark:text-slate-200">${esc(item.toko || '-')}</span></div>
-        <div class="py-1 flex justify-between"><span class="text-slate-400">PLU:</span><span class="font-bold text-slate-800 dark:text-slate-200">${esc(item.plu || '-')}</span></div>
-        <div class="py-1 flex justify-between"><span class="text-slate-400">Deskripsi:</span><span class="font-bold text-slate-800 dark:text-slate-200">${esc(item.deskripsi || '-')}</span></div>
-        <div class="py-1 flex justify-between"><span class="text-slate-400">Ageing SLA:</span><span class="font-bold text-slate-800 dark:text-slate-200">${item.ageHours || 0} Jam</span></div>
-        <div class="py-1 flex justify-between"><span class="text-slate-400">Status Saat Ini:</span><span class="font-bold text-alfa-red">${esc(item.penanganan || 'Belum Ditangani')}</span></div>
-      `;
-
-      document.getElementById('modalStatus').value = item.penanganan || 'Proses';
-      document.getElementById('modalPic').value = item.pic || '';
-      document.getElementById('modalNotes').value = item.catatan || '';
-
-      document.getElementById('detailModal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-      document.getElementById('detailModal').classList.add('hidden');
-      activeModalItem = null;
-    }
-
-    async function saveModalUpdate() {
-      if (!activeModalItem) return;
-
-      const payload = {
-        order_id: activeModalItem.order_id,
-        penanganan: document.getElementById('modalStatus').value,
-        pic: document.getElementById('modalPic').value,
-        catatan: document.getElementById('modalNotes').value
-      };
-
-      const btn = document.getElementById('modalSaveBtn');
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Memproses...`;
-
-      const success = await sendWebhookUpdate(payload);
-      
-      btn.disabled = false;
-      btn.innerHTML = `<i class="fa-solid fa-cloud-arrow-up"></i> Simpan & Update Server`;
-
-      if (success) {
-        closeModal();
-        loadAll();
-      }
-    }
-
-    // FITUR 2: BACKEND WEBHOOK & TOAST SYSTEM
-    async function sendWebhookUpdate(payload) {
-      if (!URLS.updateWebhook) {
-        showToast('URL Webhook belum dikonfigurasi!', 'error');
-        return false;
-      }
-
-      showToast('Mengirim pembaruan ke server Google Sheet...', 'info');
-
-      try {
-        const response = await fetch(URLS.updateWebhook, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({
-            action: 'UPDATE_STATUS',
-            timestamp: new Date().toISOString(),
-            ...payload
-          })
-        });
-
-        showToast(`Status Order #${payload.order_id} berhasil diperbarui!`, 'success');
-        return true;
-      } catch (error) {
-        console.error('Webhook Error:', error);
-        showToast(`Pembaruan Order #${payload.order_id} terkirim.`, 'success');
-        return true;
-      }
-    }
-
-    function showToast(message, type = 'info') {
-      const container = document.getElementById('toastContainer');
-      if (!container) return;
-
-      const toast = document.createElement('div');
-      let bgColors = 'bg-slate-900 text-white border-slate-700';
-      let icon = '<i class="fa-solid fa-circle-info text-blue-400"></i>';
-
-      if (type === 'success') {
-        bgColors = 'bg-emerald-900 text-emerald-100 border-emerald-700';
-        icon = '<i class="fa-solid fa-circle-check text-emerald-400"></i>';
-      } else if (type === 'error') {
-        bgColors = 'bg-red-900 text-red-100 border-red-700';
-        icon = '<i class="fa-solid fa-circle-xmark text-red-400"></i>';
-      } else if (type === 'warning') {
-        bgColors = 'bg-amber-900 text-amber-100 border-amber-700';
-        icon = '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>';
-      }
-
-      toast.className = `flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl border ${bgColors} min-w-[280px] max-w-md text-xs font-bold transition-all duration-300 transform translate-y-2 pointer-events-auto`;
-      toast.innerHTML = `
-        <span class="text-base">${icon}</span>
-        <div class="flex-1">${esc(message)}</div>
-        <button onclick="this.parentElement.remove()" class="opacity-60 hover:opacity-100 text-sm">&times;</button>
-      `;
-
-      container.appendChild(toast);
-
-      setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-10px)';
-        setTimeout(() => toast.remove(), 300);
-      }, 4000);
-    }
-
-    // EXPORT FUNCTIONS
-    function exportPending() {
-      if (P.length === 0) return alert('Tidak ada data untuk diexport.');
-      let csv = 'Order ID,Tanggal,Toko,PLU,Deskripsi,Ageing Jam,Penanganan,PIC\n';
-      P.forEach(i => {
-        csv += `"${i.order_id || ''}","${i.tanggal || ''}","${i.toko || ''}","${i.plu || ''}","${i.deskripsi || ''}","${i.ageHours || 0}","${i.penanganan || ''}","${i.pic || ''}"\n`;
+      // 2. Handling Chart
+      const handlingCtx = document.getElementById('handlingChart').getContext('2d');
+      if (handlingChartInstance) handlingChartInstance.destroy();
+      handlingChartInstance = new Chart(handlingCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Proses', 'Refund', 'Kirim Ulang'],
+          datasets: [{
+            label: 'Jumlah Order',
+            data: [
+              samplePendingData.filter(d => d.handling === 'Proses').length,
+              samplePendingData.filter(d => d.handling === 'Refund').length,
+              samplePendingData.filter(d => d.handling === 'Kirim Ulang').length
+            ],
+            backgroundColor: ['#0055A5', '#E11D2A', '#10B981']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
       });
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `SAPA_Pendingan_${new Date().toISOString().split('T')[0]}.csv`;
-      a.click();
+
+      // 3. Trend Chart
+      const trendCtx = document.getElementById('trendChart').getContext('2d');
+      if (trendChartInstance) trendChartInstance.destroy();
+      trendChartInstance = new Chart(trendCtx, {
+        type: 'line',
+        data: {
+          labels: ['05 Aug', '06 Aug', '07 Aug', '08 Aug'],
+          datasets: [{
+            label: 'Pendingan Baru',
+            data: [2, 1, 1, 1],
+            borderColor: '#0055A5',
+            tension: 0.3,
+            fill: false
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
     }
 
-    function exportMultiSheetExcel() {
-      if (typeof XLSX === 'undefined') return alert('Library XLSX belum dimuat.');
-      
-      const wb = XLSX.utils.book_new();
-      
-      if (P.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(P), "Pendingan");
-      if (A.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(A), "Absensi");
-      if (S.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(S), "Serah Terima");
-      if (R.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(R), "Rekap Pengerjaan");
-      if (Staf.length) XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(Staf), "Staf Toko");
+    // Render Table Data Pendingan
+    function renderPendingTable() {
+      const table = document.getElementById('pt');
+      let html = `
+        <thead>
+          <tr class="bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700">
+            <th class="p-2.5">No Order</th>
+            <th class="p-2.5">Tanggal</th>
+            <th class="p-2.5">Toko</th>
+            <th class="p-2.5">PLU / Item</th>
+            <th class="p-2.5">Qty</th>
+            <th class="p-2.5">Penanganan</th>
+            <th class="p-2.5">Status SLA</th>
+            <th class="p-2.5">PIC</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
+      `;
 
-      XLSX.writeFile(wb, `SAPA_Balaraja_Executive_Report_${new Date().toISOString().split('T')[0]}.xlsx`);
+      samplePendingData.forEach(item => {
+        let badgeColor = "bg-emerald-100 text-emerald-800";
+        if (item.statusSLA === "Warning") badgeColor = "bg-amber-100 text-amber-800";
+        if (item.statusSLA === "Kritis") badgeColor = "bg-red-100 text-red-800";
+        if (item.statusSLA === "Over SLA") badgeColor = "bg-red-900 text-white";
+
+        html += `
+          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition">
+            <td class="p-2.5 font-bold text-alfa-blue dark:text-blue-400">${item.id}</td>
+            <td class="p-2.5 text-slate-500 dark:text-slate-400">${item.date}</td>
+            <td class="p-2.5 font-semibold">${item.storeName} (${item.storeCode})</td>
+            <td class="p-2.5">${item.item} <span class="text-slate-400">(${item.plu})</span></td>
+            <td class="p-2.5 font-bold">${item.qty}</td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-700">${item.handling}</span></td>
+            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${item.statusSLA}</span></td>
+            <td class="p-2.5 text-slate-600 dark:text-slate-300">${item.pic}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody>`;
+      table.innerHTML = html;
+      document.getElementById('pmsg').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> Menampilkan ${samplePendingData.length} data pendingan.`;
     }
 
+    // Top Stores & Top Items Render
+    function renderTopLists() {
+      // Top Stores
+      const storeCounts = {};
+      samplePendingData.forEach(d => {
+        storeCounts[d.storeName] = (storeCounts[d.storeName] || 0) + 1;
+      });
+      const topStoresContainer = document.getElementById('topStoresList');
+      topStoresContainer.innerHTML = Object.entries(storeCounts)
+        .map(([store, count]) => `
+          <div class="p-2.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex justify-between items-center">
+            <span class="text-xs font-bold truncate">${store}</span>
+            <span class="text-xs font-black bg-red-100 text-alfa-red px-2 py-0.5 rounded-full">${count} Order</span>
+          </div>
+        `).join('');
+
+      // Top Items
+      const itemCounts = {};
+      samplePendingData.forEach(d => {
+        itemCounts[d.item] = (itemCounts[d.item] || 0) + d.qty;
+      });
+      const topItemsContainer = document.getElementById('topItemsList');
+      topItemsContainer.innerHTML = Object.entries(itemCounts)
+        .map(([item, qty]) => `
+          <div class="p-2.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex justify-between items-center">
+            <span class="text-xs font-bold truncate">${item}</span>
+            <span class="text-xs font-black bg-blue-100 text-alfa-blue px-2 py-0.5 rounded-full">${qty} Unit</span>
+          </div>
+        `).join('');
+    }
+
+    // Global Search Auto Complete
+    function handleGlobalSearch(query) {
+      const resultsContainer = document.getElementById('globalSearchResults');
+      if (!query.trim()) {
+        resultsContainer.classList.add('hidden');
+        return;
+      }
+
+      const q = query.toLowerCase();
+      const filtered = samplePendingData.filter(d => 
+        d.id.toLowerCase().includes(q) || 
+        d.storeName.toLowerCase().includes(q) || 
+        d.plu.includes(q) || 
+        d.item.toLowerCase().includes(q)
+      );
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = `<div class="p-3 text-slate-400 italic">Data tidak ditemukan...</div>`;
+      } else {
+        resultsContainer.innerHTML = filtered.map(d => `
+          <div onclick="switchTab('pending')" class="p-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer transition">
+            <div class="font-bold text-alfa-blue dark:text-blue-400">${d.id} — ${d.storeName}</div>
+            <div class="text-[10px] text-slate-500">${d.item} (${d.handling})</div>
+          </div>
+        `).join('');
+      }
+      resultsContainer.classList.remove('hidden');
+    }
+
+    // Export PDF Report
     function exportPDFReport() {
-      if (typeof html2pdf === 'undefined') return alert('Library PDF belum dimuat.');
       const element = document.getElementById('pdfPrintArea');
       const opt = {
-        margin: 0.3,
-        filename: `SAPA_Executive_Report_${new Date().toISOString().split('T')[0]}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+        margin:       0.3,
+        filename:     'Executive_Dashboard_SAPA_Balaraja.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
       };
       html2pdf().set(opt).from(element).save();
     }
 
-    // Helper Escaper
-    function esc(str) {
-      if (str === null || str === undefined) return '';
-      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    // Export Multi-Sheet Excel
+    function exportMultiSheetExcel() {
+      const wb = XLSX.utils.book_new();
+      
+      // Sheet Pendingan
+      const wsPending = XLSX.utils.json_to_sheet(samplePendingData);
+      XLSX.utils.book_append_sheet(wb, wsPending, "Pendingan");
+
+      XLSX.writeFile(wb, "Data_Executive_SAPA_Balaraja.xlsx");
     }
+
+    // Load All System Components
+    function loadAll() {
+      loadMetrics();
+      initCharts();
+      renderPendingTable();
+      renderTopLists();
+    }
+
+    // On Initial Load
+    window.onload = function() {
+      loadAll();
+    };
   </script>
 </body>
 </html>
