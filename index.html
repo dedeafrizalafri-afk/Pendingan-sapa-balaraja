@@ -1,35 +1,23 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="light">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SAPA BALARAJA — Executive Dashboard</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAPA BALARAJA - Executive Operations System</title>
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- SheetJS / XLSX CDN for Multi-sheet Export -->
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <!-- html2pdf CDN for PDF Export -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts: Plus Jakarta Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <script>
     tailwind.config = {
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
           colors: {
             alfa: {
-              red: '#E11D2A',
-              redDark: '#B91C1C',
-              redLight: '#FEF2F2',
-              blue: '#0055A5'
+              red: '#e11919',
+              blue: '#005596',
+              yellow: '#ffcc00',
+              gray: '#f4f5f7'
             }
           }
         }
@@ -37,452 +25,374 @@
     }
   </script>
 
+  <!-- External Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <style>
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #F1F5F9; }
-    .dark ::-webkit-scrollbar-track { background: #0F172A; }
-    ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
-    .dark ::-webkit-scrollbar-thumb { background: #334155; }
-    ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    @media print {
-      header, .no-print, #criticalBanner, #mobileFab, footer, #bulkActionBar, #toastContainer { display: none !important; }
-      body { background: white !important; color: black !important; }
-      main { max-width: 100% !important; padding: 0 !important; }
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 4px; }
   </style>
 </head>
-<body class="bg-red-50/30 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
 
-  <!-- Top Header / Navigation -->
-  <header class="bg-alfa-red dark:bg-slate-950 text-white sticky top-0 z-40 shadow-md border-b-2 border-red-700 dark:border-slate-800 w-full overflow-x-hidden">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5">
-      
-      <!-- Top Row: Logo, Title, Global Search & Action Buttons -->
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 pb-2.5 border-b border-white/20">
-        
-        <!-- Brand & Title -->
-        <div class="flex items-center gap-2.5">
-          <div class="bg-white rounded-lg p-1 shadow-sm flex items-center justify-center border border-red-100 shrink-0">
-            <svg viewBox="0 0 240 70" class="h-7 sm:h-8 w-auto">
-              <rect x="10" y="22" width="40" height="35" rx="3" fill="#E11D2A"/>
-              <rect x="7" y="15" width="46" height="9" rx="2" fill="#E11D2A"/>
-              <rect x="27" y="15" width="6" height="42" fill="#FFFFFF"/>
-              <rect x="10" y="32" width="40" height="6" fill="#FFFFFF"/>
-              <path d="M 22 15 C 14 5, 27 2, 30 15 C 33 2, 46 5, 38 15 Z" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round"/>
-              <path d="M 2 52 L 58 52 L 54 62 L 58 68 L 2 68 L 6 62 Z" fill="#0055A5"/>
-              <text x="30" y="61" fill="#FFFFFF" font-size="5" font-weight="bold" font-family="sans-serif" text-anchor="middle">MY GROCERIES SOLUTION</text>
-              <text x="68" y="48" font-family="sans-serif" font-weight="900" font-size="37">
-                <tspan fill="#0055A5">Alfa</tspan><tspan fill="#E11D2A">gift</tspan>
-              </text>
-            </svg>
-          </div>
-
-          <div class="min-w-0">
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <h1 class="text-base sm:text-lg font-black tracking-tight text-white leading-tight truncate">SAPA BALARAJA</h1>
-              <span class="bg-white text-alfa-red text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-sm">Dashboard</span>
-            </div>
-            <p class="text-[10px] text-red-100 dark:text-slate-400 font-medium truncate">Executive Operations System</p>
-          </div>
+  <!-- Header / Navigation Bar -->
+  <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 px-4 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-alfa-red flex items-center justify-center text-white font-extrabold text-xl shadow-lg shadow-red-500/30">
+          S
         </div>
-
-        <!-- Global Search Bar -->
-        <div class="w-full md:w-64 relative">
-          <div class="relative">
-            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input id="globalSearch" oninput="handleGlobalSearch(this.value)" placeholder="Cari Global (Order/Toko/PLU)..." 
-              class="w-full bg-white/10 dark:bg-slate-800 text-white placeholder-red-200 dark:placeholder-slate-400 border border-white/30 dark:border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs focus:bg-white focus:text-slate-800 dark:focus:bg-slate-900 dark:focus:text-white focus:placeholder-slate-400 focus:outline-none transition shadow-inner">
-          </div>
-          <div id="globalSearchResults" class="hidden absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 max-h-80 overflow-y-auto z-50 text-xs text-slate-800 dark:text-slate-200 divide-y divide-slate-100 dark:divide-slate-700/50"></div>
+        <div>
+          <h1 class="text-base font-bold leading-tight">SAPA BALARAJA</h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Executive Operations System</p>
         </div>
-
-        <!-- System Controls -->
-        <div class="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto">
-          <div class="flex items-center bg-white/10 dark:bg-slate-800 border border-white/20 dark:border-slate-700 rounded-xl px-2 py-1 text-[10px]">
-            <i class="fa-solid fa-clock text-red-200 dark:text-slate-400 mr-1.5"></i>
-            <select id="refreshInterval" onchange="changeAutoRefresh()" class="bg-transparent text-white font-bold focus:outline-none cursor-pointer">
-              <option value="0" class="text-slate-800">Auto: Off</option>
-              <option value="60" class="text-slate-800">Auto: 1 mnt</option>
-              <option value="180" class="text-slate-800" selected>Auto: 3 mnt</option>
-              <option value="300" class="text-slate-800">Auto: 5 mnt</option>
-            </select>
-            <span id="timerCountdown" class="ml-1.5 font-mono text-amber-300 font-bold hidden">(3:00)</span>
-          </div>
-
-          <button onclick="exportPDFReport()" class="bg-white/20 hover:bg-white/30 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-[11px] px-2.5 py-1.5 rounded-xl font-bold transition shrink-0 flex items-center gap-1" title="Download Executive PDF Report">
-            <i class="fa-solid fa-file-pdf text-red-200"></i> PDF
-          </button>
-
-          <button onclick="exportMultiSheetExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] px-2.5 py-1.5 rounded-xl font-bold transition shrink-0 flex items-center gap-1 shadow-sm" title="Download All Data Excel (.xlsx)">
-            <i class="fa-solid fa-file-excel"></i> Excel
-          </button>
-
-          <button onclick="toggleDarkMode()" class="bg-white/20 hover:bg-white/30 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-[11px] px-2.5 py-1.5 rounded-xl font-bold transition shrink-0" title="Toggle Dark/Light Mode">
-            <i id="darkModeIcon" class="fa-solid fa-moon"></i>
-          </button>
-
-          <button onclick="window.print()" class="bg-white/20 hover:bg-white/30 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-[11px] px-2.5 py-1.5 rounded-xl font-bold transition shrink-0" title="Cetak / Save PDF">
-            <i class="fa-solid fa-print"></i>
-          </button>
-
-          <button onclick="loadAll()" class="bg-white dark:bg-slate-100 text-alfa-red dark:text-slate-900 hover:bg-red-50 text-[11px] px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition shadow-sm active:scale-95 shrink-0">
-            <i class="fa-solid fa-arrows-rotate"></i> Refresh
-          </button>
-        </div>
-
       </div>
 
-      <!-- Navigation Tabs -->
-      <div class="pt-2 overflow-x-auto no-scrollbar">
-        <nav class="flex space-x-1.5 min-w-max">
-          <button id="n0" onclick="switchTab('dash')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5">
-            <i class="fa-solid fa-chart-pie"></i> Dashboard
-          </button>
-          <button id="n1" onclick="switchTab('pending')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-box-open"></i> Data Pendingan
-          </button>
-          <button id="n2" onclick="switchTab('absensi')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-user-clock"></i> Absensi SAPA
-          </button>
-          <button id="n3" onclick="switchTab('serah')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-clipboard-check"></i> Rekap Serah Terima
-          </button>
-          <button id="n4" onclick="switchTab('rekap')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-list-check"></i> Rekap Pengerjaan
-          </button>
-          <button id="n5" onclick="switchTab('staf')" class="nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-address-book"></i> Nomor Staf Toko
-          </button>
-        </nav>
-      </div>
+      <!-- Main Navigation Tabs -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-700/50 p-1 rounded-xl text-xs font-semibold">
+        <button onclick="switchTab('dash')" id="tab-dash" class="nav-btn px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 shadow text-alfa-red dark:text-red-400 transition-all font-bold">Dashboard</button>
+        <button onclick="switchTab('pending')" id="tab-pending" class="nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all">Order Pending</button>
+        <button onclick="switchTab('absensi')" id="tab-absensi" class="nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all">Absensi</button>
+        <button onclick="switchTab('serah')" id="tab-serah" class="nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all">Serah Terima</button>
+        <button onclick="switchTab('rekap')" id="tab-rekap" class="nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all">Rekapitulasi</button>
+        <button onclick="switchTab('staf')" id="tab-staf" class="nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all">Tim & Staf</button>
+      </nav>
 
+      <!-- Action Controls -->
+      <div class="flex items-center gap-2">
+        <label class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer">
+          <i class="fa-solid fa-file-excel text-emerald-600"></i>
+          <span class="hidden sm:inline">Upload Excel</span>
+          <input type="file" id="excelFileInput" accept=".xlsx, .xls, .csv" class="hidden" onchange="handleFileUpload(event)">
+        </label>
+        <button onclick="loadAll()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-rotate text-alfa-blue"></i>
+          <span class="hidden sm:inline">Refresh Data</span>
+        </button>
+        <button onclick="exportToPDF()" class="p-2 rounded-xl bg-alfa-blue text-white hover:bg-blue-700 text-xs font-semibold flex items-center gap-1.5 shadow transition-all">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span class="hidden sm:inline">Ekspor PDF</span>
+        </button>
+        <button onclick="toggleDarkMode()" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all">
+          <i class="fa-solid fa-moon dark:hidden text-slate-600"></i>
+          <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- CRITICAL ALERT BANNER -->
-  <div id="criticalBanner" class="hidden bg-red-600 text-white px-4 py-3 shadow-lg border-b-2 border-red-800 animate-pulse transition-all duration-300">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+  <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6" id="dashboard-content">
+
+    <!-- Critical Alert Banner -->
+    <div id="critical-alert" class="bg-gradient-to-r from-red-600 to-amber-600 text-white p-4 rounded-2xl shadow-lg flex items-center justify-between gap-4 animate-pulse">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-white text-red-600 rounded-full flex items-center justify-center font-black text-lg shrink-0">
-          <i class="fa-solid fa-triangle-exclamation"></i>
+        <div class="p-2 bg-white/20 rounded-xl">
+          <i class="fa-solid fa-triangle-exclamation text-xl"></i>
         </div>
         <div>
-          <h4 class="font-black text-sm tracking-wide uppercase">PERINGATAN PENDINGAN CRITICAL (&gt; 60 JAM)</h4>
-          <p class="text-xs text-red-100 font-medium">
-            Terdapat <b id="criticalCount" class="underline underline-offset-2">0</b> order mendekati/melebihi 60 jam belum ada penanganan! 
-            <span class="font-extrabold text-amber-200">HARUS DILAKUKAN REFUND & KONFIRMASI KE TOKO SEGERA.</span>
-          </p>
+          <h3 class="text-sm font-extrabold uppercase tracking-wide">Peringatan SLA Critical (> 60 Jam)</h3>
+          <p class="text-xs text-red-100">Ditemukan <span id="critical-count" class="font-bold underline">0 order</span> melebihi SLA kritis yang memerlukan konfirmasi segera.</p>
         </div>
       </div>
-      <div class="flex items-center gap-2 self-end sm:self-auto">
-        <button onclick="filterCritical()" class="bg-white text-red-700 hover:bg-red-100 px-3.5 py-1.5 rounded-xl text-xs font-black shadow transition whitespace-nowrap">
-          Lihat Detail Data <i class="fa-solid fa-arrow-right ml-1"></i>
-        </button>
-        <button onclick="closeCriticalBanner()" class="bg-red-800 hover:bg-red-900 text-white w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm shadow transition" title="Tutup Notifikasi">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
+      <button onclick="switchTab('pending')" class="px-3 py-1.5 bg-white text-red-600 rounded-xl text-xs font-bold hover:bg-red-50 shadow transition-all">
+        Tinjau Sekarang
+      </button>
     </div>
-  </div>
 
-  <!-- Main Container -->
-  <main id="pdfPrintArea" class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 flex-grow w-full">
-
-    <!-- SECTION DASHBOARD -->
+    <!-- SECTION: DASHBOARD MAIN OVERVIEW -->
     <section id="dash" class="space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-red-200/60 dark:border-slate-800 pb-3">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Executive Summary</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Ringkasan performa & analisis operasional SAPA Balaraja</p>
+      
+      <!-- KPI Executive Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Pending</p>
+          <h2 class="text-2xl font-extrabold mt-1 text-slate-800 dark:text-white" id="kpi-total">0</h2>
+          <span class="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">Live Active</span>
         </div>
-        <div id="lastUpdate" class="text-xs text-slate-500 dark:text-slate-400 font-bold">Update: —</div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Total Refund</p>
+          <h2 class="text-2xl font-extrabold mt-1 text-red-600 dark:text-red-400" id="kpi-refund">0</h2>
+          <span class="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400" id="kpi-refund-rate">0% Rate</span>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Kirim Ulang</p>
+          <h2 class="text-2xl font-extrabold mt-1 text-blue-600 dark:text-blue-400" id="kpi-redelivery">0</h2>
+          <span class="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400" id="kpi-redelivery-rate">0% Rate</span>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Karyawan Aktif</p>
+          <h2 class="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400" id="kpi-karyawan">0/0</h2>
+          <span class="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400" id="kpi-presence">0% Presence</span>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Serah Terima</p>
+          <h2 class="text-2xl font-extrabold mt-1 text-purple-600 dark:text-purple-400" id="kpi-serah">100%</h2>
+          <span class="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-400">Shift Verified</span>
+        </div>
+
+        <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Toko Impacted</p>
+          <h2 class="text-2xl font-extrabold mt-1 text-slate-800 dark:text-white" id="kpi-toko">0</h2>
+          <span class="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300">Cabang Balaraja</span>
+        </div>
       </div>
 
-      <!-- KPI Summary Cards -->
-      <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+      <!-- Charts Section Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-red-100 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group cursor-pointer" onclick="switchTab('pending')">
-          <div class="absolute top-0 right-0 w-1.5 h-full bg-alfa-red"></div>
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-[10px] font-extrabold text-slate-400 dark:text-slate-400 uppercase tracking-wider">Total Pending</p>
-              <h3 id="cp" class="text-2xl font-black text-slate-800 dark:text-white mt-1 group-hover:text-alfa-red transition">—</h3>
-            </div>
-            <div class="w-8 h-8 bg-red-50 dark:bg-slate-700 text-alfa-red dark:text-red-400 rounded-xl flex items-center justify-center text-sm font-bold">
-              <i class="fa-solid fa-box"></i>
-            </div>
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-3 flex items-center gap-1 font-medium"><i class="fa-solid fa-circle-info text-alfa-red"></i> Real-time</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-red-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-1.5 h-full bg-red-600"></div>
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-[10px] font-extrabold text-red-500 dark:text-red-400 uppercase tracking-wider">Total Refund</p>
-              <h3 id="cr" class="text-2xl font-black text-alfa-red dark:text-red-400 mt-1 group-hover:scale-105 transition">—</h3>
-            </div>
-            <div class="w-8 h-8 bg-red-100 dark:bg-slate-700 text-alfa-red dark:text-red-400 rounded-xl flex items-center justify-center text-sm font-bold">
-              <i class="fa-solid fa-hand-holding-dollar"></i>
-            </div>
-          </div>
-          <p class="text-[10px] text-red-600 dark:text-red-400 mt-3 flex items-center justify-between font-bold">
-            <span><i class="fa-solid fa-arrow-down-left"></i> Penanganan</span>
-            <span id="crRatio" class="bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300 px-1.5 py-0.5 rounded text-[9px]">0%</span>
-          </p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-blue-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-1.5 h-full bg-alfa-blue"></div>
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-[10px] font-extrabold text-alfa-blue dark:text-blue-400 uppercase tracking-wider">Kirim Ulang</p>
-              <h3 id="ck" class="text-2xl font-black text-alfa-blue dark:text-blue-400 mt-1 group-hover:scale-105 transition">—</h3>
-            </div>
-            <div class="w-8 h-8 bg-blue-100 dark:bg-slate-700 text-alfa-blue dark:text-blue-400 rounded-xl flex items-center justify-center text-sm font-bold">
-              <i class="fa-solid fa-truck-fast"></i>
-            </div>
-          </div>
-          <p class="text-[10px] text-alfa-blue dark:text-blue-400 mt-3 flex items-center justify-between font-bold">
-            <span><i class="fa-solid fa-rotate-right"></i> Redelivery</span>
-            <span id="ckRatio" class="bg-blue-100 dark:bg-blue-950 text-alfa-blue dark:text-blue-300 px-1.5 py-0.5 rounded text-[9px]">0%</span>
-          </p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group cursor-pointer" onclick="switchTab('absensi')">
-          <div class="absolute top-0 right-0 w-1.5 h-full bg-slate-600"></div>
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Karyawan</p>
-              <h3 id="ca" class="text-2xl font-black text-slate-800 dark:text-white mt-1 group-hover:text-slate-600 transition">—</h3>
-            </div>
-            <div class="w-8 h-8 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-xl flex items-center justify-center text-sm font-bold">
-              <i class="fa-solid fa-users"></i>
-            </div>
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-3 flex items-center gap-1 font-medium"><i class="fa-solid fa-user-check text-slate-600"></i> Active Master</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group cursor-pointer" onclick="switchTab('serah')">
-          <div class="absolute top-0 right-0 w-1.5 h-full bg-emerald-500"></div>
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Serah Terima</p>
-              <h3 id="cs" class="text-2xl font-black text-slate-800 dark:text-white mt-1 group-hover:text-emerald-600 transition">—</h3>
-            </div>
-            <div class="w-8 h-8 bg-emerald-50 dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 rounded-xl flex items-center justify-center text-sm font-bold">
-              <i class="fa-solid fa-receipt"></i>
-            </div>
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-3 flex items-center gap-1 font-medium"><i class="fa-solid fa-circle-check text-emerald-500"></i> Rekapitulasi</p>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-1.5 h-full bg-amber-500"></div>
-          <div class="flex justify-between items-start">
-            <div>
-              <p class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Toko Impacted</p>
-              <h3 id="ct" class="text-2xl font-black text-slate-800 dark:text-white mt-1 group-hover:text-amber-600 transition">—</h3>
-            </div>
-            <div class="w-8 h-8 bg-amber-50 dark:bg-slate-700 text-amber-600 dark:text-amber-400 rounded-xl flex items-center justify-center text-sm font-bold">
-              <i class="fa-solid fa-store"></i>
-            </div>
-          </div>
-          <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-3 flex items-center gap-1 font-medium"><i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Toko pending</p>
-        </div>
-
-      </div>
-
-      <!-- GRAFIK & SLA BREAKDOWN -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
-          <div class="mb-3">
-            <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-              <i class="fa-solid fa-chart-pie text-amber-500"></i> Distribusi SLA Ageing
-            </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Order yang belum ada penanganan</p>
-          </div>
-          <div class="h-48 relative">
-            <canvas id="slaChart"></canvas>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
-          <div class="mb-3">
-            <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-              <i class="fa-solid fa-chart-column text-alfa-red"></i> Kategori Penanganan
-            </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Perbandingan kategori tindak lanjut order</p>
-          </div>
-          <div class="h-48 relative">
-            <canvas id="handlingChart"></canvas>
-          </div>
-        </div>
-
-        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-5 border border-red-100 dark:border-slate-700 shadow-sm">
-          <div class="mb-3">
-            <h3 class="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
-              <i class="fa-solid fa-chart-line text-alfa-blue dark:text-blue-400"></i> Tren Pendingan Harian
-            </h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Pergerakan volume order per tanggal</p>
-          </div>
-          <div class="h-48 relative">
-            <canvas id="trendChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <!-- TOP TOKO & PLU -->
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 border border-red-100 dark:border-slate-700 shadow-sm">
-        <div class="flex justify-between items-center mb-1">
-          <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
-            <i class="fa-solid fa-ranking-star text-alfa-red"></i> Top 5 Toko Pending Terbanyak
+        <!-- Doughnut Chart: SLA Ageing -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <h3 class="text-sm font-bold mb-4 flex items-center justify-between">
+            <span>Distribusi SLA Ageing</span>
+            <i class="fa-solid fa-chart-pie text-slate-400"></i>
           </h3>
-          <button onclick="switchTab('pending')" class="text-xs font-bold text-alfa-red dark:text-red-400 hover:underline transition flex items-center gap-1">
-            Lihat Semua <i class="fa-solid fa-arrow-right"></i>
-          </button>
+          <div class="relative h-56 flex items-center justify-center">
+            <canvas id="chartSLA"></canvas>
+          </div>
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Toko dengan kebutuhan penanganan teratas</p>
-        <div id="topStoresList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          <p class="text-xs text-slate-400 italic">Memuat peringkat toko...</p>
-        </div>
-      </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 border border-red-100 dark:border-slate-700 shadow-sm">
-        <div class="flex justify-between items-center mb-1">
-          <h3 class="text-sm sm:text-base font-bold text-slate-800 dark:text-white flex items-center gap-2">
-            <i class="fa-solid fa-boxes-stacked text-alfa-red"></i> Top 10 Item/PLU Terbanyak Pending
+        <!-- Bar Chart: Top Toko Impacted -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <h3 class="text-sm font-bold mb-4 flex items-center justify-between">
+            <span>Top 5 Toko Impacted</span>
+            <i class="fa-solid fa-store text-slate-400"></i>
           </h3>
-          <span class="text-[10px] bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300 font-extrabold px-2 py-0.5 rounded-full">Pareto SKU</span>
+          <div class="relative h-56">
+            <canvas id="chartToko"></canvas>
+          </div>
         </div>
-        <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">Analisis barang/PLU yang paling sering terkendala operasional</p>
-        <div id="topItemsList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          <p class="text-xs text-slate-400 italic">Memuat data item...</p>
-        </div>
-      </div>
 
+        <!-- Line Chart: Daily Trend -->
+        <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+          <h3 class="text-sm font-bold mb-4 flex items-center justify-between">
+            <span>Tren Kasus Harian</span>
+            <i class="fa-solid fa-chart-line text-slate-400"></i>
+          </h3>
+          <div class="relative h-56">
+            <canvas id="chartTrend"></canvas>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- SECTION PENDINGAN -->
-    <section id="pending" class="space-y-4 sm:space-y-6" hidden>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Data Pendingan SAPA</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Integrasi real-time data pendingan toko</p>
-        </div>
-        <div class="flex gap-2 flex-wrap">
-          <button onclick="resetPendingFilters()" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl font-bold flex items-center gap-1.5 transition">
-            <i class="fa-solid fa-xmark"></i> Reset Filter
+    <!-- SECTION: ORDER PENDING TABLE -->
+    <section id="pending" hidden class="space-y-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-base font-bold">Daftar Order Pending & SLA</h2>
+        
+        <!-- Filters & Bulk Operations -->
+        <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+          <input type="text" id="searchPending" oninput="filterData()" placeholder="Cari Toko / PLU / Order ID..." class="px-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-alfa-blue">
+          <select id="filterSLA" onchange="filterData()" class="px-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+            <option value="">Semua SLA</option>
+            <option value="<24">< 24 Jam</option>
+            <option value="24-48">24 - 48 Jam</option>
+            <option value="48-60">48 - 60 Jam</option>
+            <option value=">60">> 60 Jam</option>
+          </select>
+          <button onclick="bulkWhatsAppAction()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 shadow">
+            <i class="fa-brands fa-whatsapp"></i> Broadcast WA
           </button>
-          <button onclick="exportPending()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-2 rounded-xl font-bold flex items-center gap-1.5 shadow-sm transition">
-            <i class="fa-solid fa-file-excel"></i> Export CSV
-          </button>
         </div>
       </div>
 
-      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-red-100 dark:border-slate-700 shadow-sm overflow-hidden">
-        <div id="pmsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-          <i class="fa-solid fa-circle-check text-emerald-500"></i> Memuat data pendingan...
+      <!-- Data Table -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700 text-slate-500 font-semibold">
+              <tr>
+                <th class="p-3 w-10 text-center"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
+                <th class="p-3">Order ID</th>
+                <th class="p-3">Toko / Kode</th>
+                <th class="p-3">PLU & Deskripsi</th>
+                <th class="p-3">Tgl Order</th>
+                <th class="p-3">SLA Ageing</th>
+                <th class="p-3">Kategori Status</th>
+                <th class="p-3 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="tablePendingBody" class="divide-y divide-slate-100 dark:divide-slate-700/50">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
         </div>
-        <div class="overflow-x-auto min-h-[300px]">
-          <table id="pt" class="w-full text-left text-xs border-collapse"></table>
+        <div id="pendingPage" class="p-3 bg-slate-50 dark:bg-slate-900 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between text-xs text-slate-500">
+          <span id="pendingCountInfo">Menampilkan 0 Data</span>
+          <div class="flex gap-1" id="pendingPaginationBtns"></div>
         </div>
       </div>
     </section>
 
-    <!-- SECTION ABSENSI -->
-    <section id="absensi" class="space-y-4 sm:space-y-6" hidden>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Master Absensi SAPA</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Daftar kehadiran & data karyawan SAPA Balaraja</p>
-        </div>
+    <!-- SECTION: ABSENSI KARYAWAN -->
+    <section id="absensi" hidden class="space-y-4">
+      <div class="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+        <h2 class="text-base font-bold">Monitoring Absensi Operational Team</h2>
+        <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 px-3 py-1 rounded-xl">Shift Active</span>
       </div>
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
-        Data Absensi Karyawan
+
+      <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+        <div id="amsg" class="p-3.5 text-xs font-semibold text-slate-500 dark:text-slate-400 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-circle-check text-emerald-500"></i> Sistem Absensi Terhubung
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-700 text-slate-500 font-semibold">
+              <tr>
+                <th class="p-3">NIK</th>
+                <th class="p-3">Nama Karyawan</th>
+                <th class="p-3">Jabatan / Role</th>
+                <th class="p-3">Jam Masuk</th>
+                <th class="p-3">Status Presence</th>
+              </tr>
+            </thead>
+            <tbody id="tableAbsensiBody" class="divide-y divide-slate-100 dark:divide-slate-700/50">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <!-- SECTION SERAH TERIMA -->
-    <section id="serah" class="space-y-4 sm:space-y-6" hidden>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Serah Terima</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Laporan pergantian shift & penyerahan tugas</p>
+    <!-- SECTION: SERAH TERIMA -->
+    <section id="serah" hidden class="space-y-4">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+        <h2 class="text-base font-bold">Log Serah Terima Shift</h2>
+        <div id="serahTerimaContainer" class="space-y-3">
+          <!-- Rendered via JS -->
         </div>
-      </div>
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
-        Data Rekap Serah Terima Operasional
       </div>
     </section>
 
-    <!-- SECTION REKAP PENGERJAAN -->
-    <section id="rekap" class="space-y-4 sm:space-y-6" hidden>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Rekap Pengerjaan</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Pencapaian target pengerjaan harian</p>
+    <!-- SECTION: REKAPITULASI -->
+    <section id="rekap" hidden class="space-y-4">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-base font-bold mb-4">Rekapitulasi Kinerja Bulanan</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 class="font-bold mb-2 text-sm">Penyelesaian Kasus SLA</h4>
+            <p class="py-1">SLA Compliance Rate: <span class="font-bold text-emerald-600">94.2%</span></p>
+            <p class="py-1">Rata-rata Penanganan: <span class="font-bold">18.4 Jam</span></p>
+          </div>
+          <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700">
+            <h4 class="font-bold mb-2 text-sm">Status Refund vs Redelivery</h4>
+            <p class="py-1">Total Refund Disetujui: <span class="font-bold text-red-600" id="rekapRefund">0</span></p>
+            <p class="py-1">Total Kirim Ulang Sukses: <span class="font-bold text-blue-600" id="rekapRedelivery">0</span></p>
+          </div>
         </div>
-      </div>
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
-        Data Rekapitulasi Pengerjaan Harian
       </div>
     </section>
 
-    <!-- SECTION STAF TOKO -->
-    <section id="staf" class="space-y-4 sm:space-y-6" hidden>
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-red-200/60 dark:border-slate-800 pb-3">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Nomor Staf Toko</h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Kontak PIC & Staf Toko Terkait</p>
+    <!-- SECTION: TIM & STAF -->
+    <section id="staf" hidden class="space-y-4">
+      <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+        <h2 class="text-base font-bold mb-4">Direktori Tim Operasional SAPA Balaraja</h2>
+        <div id="stafListContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs">
+          <!-- Rendered via JS -->
         </div>
-      </div>
-      <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm text-center text-slate-500">
-        Data Kontak PIC Toko
       </div>
     </section>
 
   </main>
 
-  <!-- Footnote -->
-  <footer class="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-4 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-400">
-      &copy; 2026 SAPA Balaraja — Executive Operations Dashboard. All rights reserved.
-    </div>
-  </footer>
-
-  <!-- SCRIPT INTEGRASI DASHBOARD -->
+  <!-- Complete JavaScript Engine -->
   <script>
-    // Sample Initial Data JSON
-    let samplePendingData = [
-      { id: "ORD-101", date: "2026-08-08 08:00", storeCode: "T101", storeName: "Balaraja Center", plu: "100231", item: "Minyak Goreng 2L", qty: 2, handling: "Proses", pic: "Budi", statusSLA: "Aman", hours: 5 },
-      { id: "ORD-102", date: "2026-08-07 10:00", storeCode: "T102", storeName: "Balaraja Barat", plu: "100232", item: "Beras Premium 5kg", qty: 1, handling: "Refund", pic: "Andi", statusSLA: "Warning", hours: 27 },
-      { id: "ORD-103", date: "2026-08-06 09:00", storeCode: "T101", storeName: "Balaraja Center", plu: "100231", item: "Minyak Goreng 2L", qty: 3, handling: "Kirim Ulang", pic: "Siti", statusSLA: "Kritis", hours: 52 },
-      { id: "ORD-104", date: "2026-08-05 11:00", storeCode: "T103", storeName: "Cikupa Square", plu: "100551", item: "Gula Pasir 1kg", qty: 5, handling: "Proses", pic: "Budi", statusSLA: "Over SLA", hours: 71 },
-      { id: "ORD-105", date: "2026-08-05 08:30", storeCode: "T104", storeName: "Tigaraksa Gemilang", plu: "100231", item: "Minyak Goreng 2L", qty: 1, handling: "Refund", pic: "Rina", statusSLA: "Over SLA", hours: 73 }
-    ];
+    // State Application Management
+    const appState = {
+      currentPage: 1,
+      itemsPerPage: 10,
+      filteredPending: [],
+      pendingData: [],
+      absensiData: [],
+      serahTerimaData: [],
+      stafData: [],
+      charts: {}
+    };
 
-    let slaChartInstance = null;
-    let handlingChartInstance = null;
-    let trendChartInstance = null;
+    // Initializer Data Dummy Generator
+    function generateInitialData() {
+      const stores = [
+        'Toko Balaraja Utama (T01)', 'Toko Pasir Jaya (T04)', 'Toko Cikupa Mas (T08)', 
+        'Toko Cisoka Raya (T12)', 'Toko Tigaraksa Permai (T02)', 'Toko Balaraja Barat (T03)',
+        'Toko Jayanti Indah (T05)', 'Toko Solear Asri (T09)'
+      ];
 
-    // Switch Navigation Tab
+      const items = [
+        { plu: '400912', desc: 'Minyak Goreng 2L' },
+        { plu: '100344', desc: 'Beras Premium 5kg' },
+        { plu: '502110', desc: 'Gula Pasir 1kg' },
+        { plu: '304918', desc: 'Susu UHT 1000ml' },
+        { plu: '201994', desc: 'Deterjen Bubuk 800g' }
+      ];
+
+      const statuses = ['Pending Refund', 'Kirim Ulang', 'Proses Verifikasi', 'Menunggu Driver'];
+
+      // Generate 25 order pending
+      appState.pendingData = Array.from({ length: 25 }, (_, i) => {
+        const store = stores[Math.floor(Math.random() * stores.length)];
+        const item = items[Math.floor(Math.random() * items.length)];
+        const hours = Math.floor(Math.random() * 70) + 5; // 5 to 75 hours
+        const status = statuses[Math.floor(Math.random() * statuses.length)];
+        return {
+          id: `ORD-2026-${9000 + i}`,
+          store: store,
+          plu: item.plu,
+          desc: item.desc,
+          date: `08 Aug 2026, ${String(Math.floor(Math.random()*12)+8).padStart(2,'0')}:15`,
+          sla: hours,
+          status: status,
+          selected: false
+        };
+      });
+
+      // Absensi Data
+      appState.absensiData = [
+        { nik: '2024091', name: 'Ahmad Fauzi', role: 'Leader Operations', time: '06:55 WIB', status: 'Hadir' },
+        { nik: '2024092', name: 'Siti Rahmawati', role: 'Admin Expediter', time: '07:02 WIB', status: 'Hadir' },
+        { nik: '2024093', name: 'Budi Santoso', role: 'Field Coordinator', time: '07:15 WIB', status: 'Terlambat' },
+        { nik: '2024094', name: 'Dewi Lestari', role: 'Quality Control', time: '06:50 WIB', status: 'Hadir' },
+        { nik: '2024095', name: 'Rian Hidayat', role: 'Data Analyst', time: '07:00 WIB', status: 'Hadir' }
+      ];
+
+      // Serah Terima Data
+      appState.serahTerimaData = [
+        { shift: 'Shift 1 -> Shift 2', time: '08 Aug 2026, 14:00 WIB', note: 'Pending refund SKU Minyak Goreng T01 terkonfirmasi. Sisa 3 order kritis butuh eskalasi.' },
+        { shift: 'Shift 3 -> Shift 1', time: '08 Aug 2026, 06:00 WIB', note: 'Serah terima kunci operasional dan log absensi lengkap. Tidak ada insiden malam.' }
+      ];
+
+      // Staf Data
+      appState.stafData = [
+        { name: 'Ahmad Fauzi', role: 'Operations Leader', phone: '081234567890', status: 'On Duty' },
+        { name: 'Siti Rahmawati', role: 'Admin Expediter', phone: '081298765432', status: 'On Duty' },
+        { name: 'Budi Santoso', role: 'Field Lead', phone: '081311223344', status: 'On Duty' }
+      ];
+
+      appState.filteredPending = [...appState.pendingData];
+    }
+
+    // Tab Navigation Switcher
     function switchTab(tabId) {
-      const tabs = ['dash', 'pending', 'absensi', 'serah', 'rekap', 'staf'];
-      tabs.forEach((t, i) => {
-        const sec = document.getElementById(t);
-        const btn = document.getElementById('n' + i);
-        if (t === tabId) {
-          if (sec) sec.hidden = false;
-          if (btn) {
-            btn.className = "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg transition-all duration-200 bg-white text-alfa-red dark:bg-slate-800 dark:text-white shadow-sm flex items-center gap-1.5";
-          }
-        } else {
-          if (sec) sec.hidden = true;
-          if (btn) {
-            btn.className = "nav-btn px-3.5 py-1.5 text-xs font-bold rounded-lg text-red-100 hover:text-white hover:bg-red-700/50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all duration-200 flex items-center gap-1.5";
+      const sections = ['dash', 'pending', 'absensi', 'serah', 'rekap', 'staf'];
+      sections.forEach(s => {
+        const el = document.getElementById(s);
+        const btn = document.getElementById('tab-' + s);
+        if (el) el.hidden = (s !== tabId);
+        if (btn) {
+          if (s === tabId) {
+            btn.className = "nav-btn px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 shadow text-alfa-red dark:text-red-400 transition-all font-bold";
+          } else {
+            btn.className = "nav-btn px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:text-slate-900 transition-all font-semibold";
           }
         }
       });
@@ -491,257 +401,291 @@
     // Toggle Dark Mode
     function toggleDarkMode() {
       document.documentElement.classList.toggle('dark');
-      const icon = document.getElementById('darkModeIcon');
-      if (document.documentElement.classList.contains('dark')) {
-        icon.className = "fa-solid fa-sun";
-      } else {
-        icon.className = "fa-solid fa-moon";
-      }
     }
 
-    // Load & Render KPI Metrics
-    function loadMetrics() {
-      const totalPending = samplePendingData.length;
-      const totalRefund = samplePendingData.filter(d => d.handling === "Refund").length;
-      const totalKirim = samplePendingData.filter(d => d.handling === "Kirim Ulang").length;
-      const storesImpacted = new Set(samplePendingData.map(d => d.storeCode)).size;
-
-      document.getElementById('cp').innerText = totalPending;
-      document.getElementById('cr').innerText = totalRefund;
-      document.getElementById('ck').innerText = totalKirim;
-      document.getElementById('ct').innerText = storesImpacted;
-      document.getElementById('ca').innerText = "12";
-      document.getElementById('cs').innerText = "28";
-
-      const crRatio = totalPending ? Math.round((totalRefund / totalPending) * 100) : 0;
-      const ckRatio = totalPending ? Math.round((totalKirim / totalPending) * 100) : 0;
-
-      document.getElementById('crRatio').innerText = crRatio + "%";
-      document.getElementById('ckRatio').innerText = ckRatio + "%";
-
-      // Critical Check (> 60 Hours)
-      const criticals = samplePendingData.filter(d => d.hours >= 60 && d.handling === "Proses");
-      const banner = document.getElementById('criticalBanner');
-      if (criticals.length > 0) {
-        banner.classList.remove('hidden');
-        document.getElementById('criticalCount').innerText = criticals.length;
-      } else {
-        banner.classList.add('hidden');
-      }
-
-      document.getElementById('lastUpdate').innerText = "Update: " + new Date().toLocaleTimeString('id-ID');
+    // Refresh Data
+    function loadAll() {
+      generateInitialData();
+      updateAllUI();
     }
 
-    // Filter Critical
-    function filterCritical() {
-      switchTab('pending');
+    // Calculate KPIs and Alerts
+    function updateKPIs() {
+      const total = appState.pendingData.length;
+      const refunds = appState.pendingData.filter(d => d.status === 'Pending Refund').length;
+      const redelivery = appState.pendingData.filter(d => d.status === 'Kirim Ulang').length;
+      const critical = appState.pendingData.filter(d => d.sla > 60).length;
+      
+      const uniqueStores = new Set(appState.pendingData.map(d => d.store)).size;
+      const presence = appState.absensiData.filter(a => a.status === 'Hadir').length;
+
+      document.getElementById('kpi-total').innerText = total;
+      document.getElementById('kpi-refund').innerText = refunds;
+      document.getElementById('kpi-refund-rate').innerText = total ? ((refunds/total)*100).toFixed(1) + '% Rate' : '0%';
+      document.getElementById('kpi-redelivery').innerText = redelivery;
+      document.getElementById('kpi-redelivery-rate').innerText = total ? ((redelivery/total)*100).toFixed(1) + '% Rate' : '0%';
+      document.getElementById('kpi-karyawan').innerText = `${presence}/${appState.absensiData.length}`;
+      document.getElementById('kpi-presence').innerText = appState.absensiData.length ? Math.round((presence/appState.absensiData.length)*100) + '% Presence' : '0%';
+      document.getElementById('kpi-toko').innerText = uniqueStores;
+      document.getElementById('critical-count').innerText = `${critical} order`;
+
+      document.getElementById('rekapRefund').innerText = refunds;
+      document.getElementById('rekapRedelivery').innerText = redelivery;
     }
 
-    function closeCriticalBanner() {
-      document.getElementById('criticalBanner').classList.add('hidden');
+    // SLA Helper Class
+    function getSLABadge(sla) {
+      if (sla < 24) return '<span class="px-2 py-0.5 rounded-full font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400">'+sla+' Jam</span>';
+      if (sla <= 48) return '<span class="px-2 py-0.5 rounded-full font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">'+sla+' Jam</span>';
+      if (sla <= 60) return '<span class="px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400">'+sla+' Jam</span>';
+      return '<span class="px-2 py-0.5 rounded-full font-bold bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400 animate-pulse">'+sla+' Jam</span>';
     }
 
-    // Render Charts
-    function initCharts() {
-      // 1. SLA Chart
-      const slaCtx = document.getElementById('slaChart').getContext('2d');
-      if (slaChartInstance) slaChartInstance.destroy();
-      slaChartInstance = new Chart(slaCtx, {
-        type: 'doughnut',
-        data: {
-          labels: ['<24h (Aman)', '24-48h (Warning)', '48-60h (Kritis)', '>60h (Over SLA)'],
-          datasets: [{
-            data: [
-              samplePendingData.filter(d => d.hours < 24).length,
-              samplePendingData.filter(d => d.hours >= 24 && d.hours < 48).length,
-              samplePendingData.filter(d => d.hours >= 48 && d.hours < 60).length,
-              samplePendingData.filter(d => d.hours >= 60).length
-            ],
-            backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#991B1B']
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-
-      // 2. Handling Chart
-      const handlingCtx = document.getElementById('handlingChart').getContext('2d');
-      if (handlingChartInstance) handlingChartInstance.destroy();
-      handlingChartInstance = new Chart(handlingCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Proses', 'Refund', 'Kirim Ulang'],
-          datasets: [{
-            label: 'Jumlah Order',
-            data: [
-              samplePendingData.filter(d => d.handling === 'Proses').length,
-              samplePendingData.filter(d => d.handling === 'Refund').length,
-              samplePendingData.filter(d => d.handling === 'Kirim Ulang').length
-            ],
-            backgroundColor: ['#0055A5', '#E11D2A', '#10B981']
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-
-      // 3. Trend Chart
-      const trendCtx = document.getElementById('trendChart').getContext('2d');
-      if (trendChartInstance) trendChartInstance.destroy();
-      trendChartInstance = new Chart(trendCtx, {
-        type: 'line',
-        data: {
-          labels: ['05 Aug', '06 Aug', '07 Aug', '08 Aug'],
-          datasets: [{
-            label: 'Pendingan Baru',
-            data: [2, 1, 1, 1],
-            borderColor: '#0055A5',
-            tension: 0.3,
-            fill: false
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-    }
-
-    // Render Table Data Pendingan
+    // Render Pending Table with Pagination
     function renderPendingTable() {
-      const table = document.getElementById('pt');
-      let html = `
-        <thead>
-          <tr class="bg-slate-100 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 border-b border-slate-200 dark:border-slate-700">
-            <th class="p-2.5">No Order</th>
-            <th class="p-2.5">Tanggal</th>
-            <th class="p-2.5">Toko</th>
-            <th class="p-2.5">PLU / Item</th>
-            <th class="p-2.5">Qty</th>
-            <th class="p-2.5">Penanganan</th>
-            <th class="p-2.5">Status SLA</th>
-            <th class="p-2.5">PIC</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100 dark:divide-slate-700/50">
-      `;
+      const tbody = document.getElementById('tablePendingBody');
+      tbody.innerHTML = '';
 
-      samplePendingData.forEach(item => {
-        let badgeColor = "bg-emerald-100 text-emerald-800";
-        if (item.statusSLA === "Warning") badgeColor = "bg-amber-100 text-amber-800";
-        if (item.statusSLA === "Kritis") badgeColor = "bg-red-100 text-red-800";
-        if (item.statusSLA === "Over SLA") badgeColor = "bg-red-900 text-white";
+      const start = (appState.currentPage - 1) * appState.itemsPerPage;
+      const end = start + appState.itemsPerPage;
+      const pageData = appState.filteredPending.slice(start, end);
 
-        html += `
-          <tr class="hover:bg-slate-50 dark:hover:bg-slate-700/30 transition">
-            <td class="p-2.5 font-bold text-alfa-blue dark:text-blue-400">${item.id}</td>
-            <td class="p-2.5 text-slate-500 dark:text-slate-400">${item.date}</td>
-            <td class="p-2.5 font-semibold">${item.storeName} (${item.storeCode})</td>
-            <td class="p-2.5">${item.item} <span class="text-slate-400">(${item.plu})</span></td>
-            <td class="p-2.5 font-bold">${item.qty}</td>
-            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 dark:bg-slate-700">${item.handling}</span></td>
-            <td class="p-2.5"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${badgeColor}">${item.statusSLA}</span></td>
-            <td class="p-2.5 text-slate-600 dark:text-slate-300">${item.pic}</td>
-          </tr>
-        `;
-      });
+      if (pageData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-slate-400">Tidak ada data pending ditemukan.</td></tr>`;
+      } else {
+        pageData.forEach((row, idx) => {
+          const tr = document.createElement('tr');
+          tr.className = "hover:bg-slate-50/80 dark:hover:bg-slate-700/30 transition-colors";
+          tr.innerHTML = `
+            <td class="p-3 text-center"><input type="checkbox" ${row.selected ? 'checked' : ''} onchange="toggleSelectRow(${start + idx})"></td>
+            <td class="p-3 font-mono font-bold text-alfa-blue">${row.id}</td>
+            <td class="p-3 font-medium">${row.store}</td>
+            <td class="p-3"><span class="font-bold">${row.plu}</span> - ${row.desc}</td>
+            <td class="p-3 text-slate-500">${row.date}</td>
+            <td class="p-3">${getSLABadge(row.sla)}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded-full font-semibold bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300">${row.status}</span></td>
+            <td class="p-3 text-right">
+              <button onclick="actionFollowUp('${row.id}')" class="px-2 py-1 bg-alfa-blue text-white rounded-lg text-[10px] font-bold shadow hover:bg-blue-700">Follow Up</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
 
-      html += `</tbody>`;
-      table.innerHTML = html;
-      document.getElementById('pmsg').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> Menampilkan ${samplePendingData.length} data pendingan.`;
+      // Pagination Controls
+      const totalPages = Math.ceil(appState.filteredPending.length / appState.itemsPerPage) || 1;
+      document.getElementById('pendingCountInfo').innerText = `Menampilkan ${pageData.length} dari ${appState.filteredPending.length} Data`;
+      
+      const pageContainer = document.getElementById('pendingPaginationBtns');
+      pageContainer.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.innerText = i;
+        btn.className = `px-2.5 py-1 rounded-md text-xs font-bold ${i === appState.currentPage ? 'bg-alfa-blue text-white' : 'bg-white dark:bg-slate-800 border'}`;
+        btn.onclick = () => { appState.currentPage = i; renderPendingTable(); };
+        pageContainer.appendChild(btn);
+      }
     }
 
-    // Top Stores & Top Items Render
-    function renderTopLists() {
-      // Top Stores
-      const storeCounts = {};
-      samplePendingData.forEach(d => {
-        storeCounts[d.storeName] = (storeCounts[d.storeName] || 0) + 1;
-      });
-      const topStoresContainer = document.getElementById('topStoresList');
-      topStoresContainer.innerHTML = Object.entries(storeCounts)
-        .map(([store, count]) => `
-          <div class="p-2.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex justify-between items-center">
-            <span class="text-xs font-bold truncate">${store}</span>
-            <span class="text-xs font-black bg-red-100 text-alfa-red px-2 py-0.5 rounded-full">${count} Order</span>
-          </div>
-        `).join('');
+    // Filter Functionality
+    function filterData() {
+      const query = document.getElementById('searchPending').value.toLowerCase();
+      const slaFilter = document.getElementById('filterSLA').value;
 
-      // Top Items
-      const itemCounts = {};
-      samplePendingData.forEach(d => {
-        itemCounts[d.item] = (itemCounts[d.item] || 0) + d.qty;
+      appState.filteredPending = appState.pendingData.filter(item => {
+        const matchQuery = item.id.toLowerCase().includes(query) || 
+                           item.store.toLowerCase().includes(query) || 
+                           item.plu.toLowerCase().includes(query) ||
+                           item.desc.toLowerCase().includes(query);
+
+        let matchSLA = true;
+        if (slaFilter === '<24') matchSLA = item.sla < 24;
+        else if (slaFilter === '24-48') matchSLA = item.sla >= 24 && item.sla <= 48;
+        else if (slaFilter === '48-60') matchSLA = item.sla > 48 && item.sla <= 60;
+        else if (slaFilter === '>60') matchSLA = item.sla > 60;
+
+        return matchQuery && matchSLA;
       });
-      const topItemsContainer = document.getElementById('topItemsList');
-      topItemsContainer.innerHTML = Object.entries(itemCounts)
-        .map(([item, qty]) => `
-          <div class="p-2.5 rounded-xl border border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 flex justify-between items-center">
-            <span class="text-xs font-bold truncate">${item}</span>
-            <span class="text-xs font-black bg-blue-100 text-alfa-blue px-2 py-0.5 rounded-full">${qty} Unit</span>
-          </div>
-        `).join('');
+
+      appState.currentPage = 1;
+      renderPendingTable();
     }
 
-    // Global Search Auto Complete
-    function handleGlobalSearch(query) {
-      const resultsContainer = document.getElementById('globalSearchResults');
-      if (!query.trim()) {
-        resultsContainer.classList.add('hidden');
+    // Checkbox Actions
+    function toggleSelectAll(master) {
+      appState.filteredPending.forEach(row => row.selected = master.checked);
+      renderPendingTable();
+    }
+
+    function toggleSelectRow(index) {
+      appState.filteredPending[index].selected = !appState.filteredPending[index].selected;
+    }
+
+    function bulkWhatsAppAction() {
+      const selected = appState.filteredPending.filter(r => r.selected);
+      if (selected.length === 0) {
+        alert('Pilih setidaknya satu order pending untuk dibroadcast.');
         return;
       }
-
-      const q = query.toLowerCase();
-      const filtered = samplePendingData.filter(d => 
-        d.id.toLowerCase().includes(q) || 
-        d.storeName.toLowerCase().includes(q) || 
-        d.plu.includes(q) || 
-        d.item.toLowerCase().includes(q)
-      );
-
-      if (filtered.length === 0) {
-        resultsContainer.innerHTML = `<div class="p-3 text-slate-400 italic">Data tidak ditemukan...</div>`;
-      } else {
-        resultsContainer.innerHTML = filtered.map(d => `
-          <div onclick="switchTab('pending')" class="p-2.5 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer transition">
-            <div class="font-bold text-alfa-blue dark:text-blue-400">${d.id} — ${d.storeName}</div>
-            <div class="text-[10px] text-slate-500">${d.item} (${d.handling})</div>
-          </div>
-        `).join('');
-      }
-      resultsContainer.classList.remove('hidden');
+      alert(`Mengirim pesan broadcast WhatsApp untuk ${selected.length} order pilihan.`);
     }
 
-    // Export PDF Report
-    function exportPDFReport() {
-      const element = document.getElementById('pdfPrintArea');
+    function actionFollowUp(id) {
+      alert(`Follow up instruksi terkirim untuk Order ID: ${id}`);
+    }
+
+    // Render Secondary Tables
+    function renderAbsensiTable() {
+      const tbody = document.getElementById('tableAbsensiBody');
+      tbody.innerHTML = appState.absensiData.map(a => `
+        <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-700/30">
+          <td class="p-3 font-mono">${a.nik}</td>
+          <td class="p-3 font-bold">${a.name}</td>
+          <td class="p-3">${a.role}</td>
+          <td class="p-3">${a.time}</td>
+          <td class="p-3"><span class="px-2 py-0.5 rounded-full font-bold ${a.status === 'Hadir' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${a.status}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderSerahTerima() {
+      const container = document.getElementById('serahTerimaContainer');
+      container.innerHTML = appState.serahTerimaData.map(s => `
+        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 text-xs space-y-2">
+          <div class="flex justify-between font-semibold border-b pb-2 dark:border-slate-700">
+            <span class="text-alfa-blue font-bold">${s.shift}</span>
+            <span class="text-slate-400">${s.time}</span>
+          </div>
+          <p class="text-slate-600 dark:text-slate-300 font-medium">"${s.note}"</p>
+        </div>
+      `).join('');
+    }
+
+    function renderStaf() {
+      const container = document.getElementById('stafListContainer');
+      container.innerHTML = appState.stafData.map(st => `
+        <div class="p-4 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-sm">${st.name}</h4>
+            <p class="text-slate-500">${st.role}</p>
+            <p class="font-mono text-slate-400 mt-1"><i class="fa-solid fa-phone text-emerald-500"></i> ${st.phone}</p>
+          </div>
+          <span class="px-2 py-0.5 text-[10px] rounded-full font-bold bg-emerald-100 text-emerald-700">${st.status}</span>
+        </div>
+      `).join('');
+    }
+
+    // Chart.js Initializer
+    function renderCharts() {
+      if (appState.charts.sla) appState.charts.sla.destroy();
+      if (appState.charts.toko) appState.charts.toko.destroy();
+      if (appState.charts.trend) appState.charts.trend.destroy();
+
+      const c1 = appState.pendingData.filter(d => d.sla < 24).length;
+      const c2 = appState.pendingData.filter(d => d.sla >= 24 && d.sla <= 48).length;
+      const c3 = appState.pendingData.filter(d => d.sla > 48 && d.sla <= 60).length;
+      const c4 = appState.pendingData.filter(d => d.sla > 60).length;
+
+      // Doughnut SLA
+      appState.charts.sla = new Chart(document.getElementById('chartSLA').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: ['<24 Jam', '24-48 Jam', '48-60 Jam', '>60 Jam'],
+          datasets: [{ data: [c1, c2, c3, c4], backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444'], borderWidth: 0 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 10 } } } } }
+      });
+
+      // Bar Top Toko
+      const storeCounts = {};
+      appState.pendingData.forEach(d => { storeCounts[d.store] = (storeCounts[d.store] || 0) + 1; });
+      const topStores = Object.entries(storeCounts).sort((a,b) => b[1] - a[1]).slice(0, 5);
+
+      appState.charts.toko = new Chart(document.getElementById('chartToko').getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: topStores.map(s => s[0].split(' ')[1] || s[0]),
+          datasets: [{ label: 'Pending', data: topStores.map(s => s[1]), backgroundColor: '#005596', borderRadius: 6 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+
+      // Line Trend
+      appState.charts.trend = new Chart(document.getElementById('chartTrend').getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+          datasets: [{ label: 'Kasus', data: [12, 19, 15, 22, 18, 25, totalPendingCount()], borderColor: '#e11919', backgroundColor: 'rgba(225,25,25,0.1)', fill: true, tension: 0.3 }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+      });
+    }
+
+    function totalPendingCount() {
+      return appState.pendingData.length;
+    }
+
+    // Excel Parser (SheetJS)
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        const data = new Uint8Array(evt.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const json = XLSX.utils.sheet_to_json(worksheet);
+
+        if (json.length > 0) {
+          appState.pendingData = json.map((row, idx) => ({
+            id: row['Order ID'] || row['ID'] || `ORD-EXCEL-${1000 + idx}`,
+            store: row['Toko'] || row['Store'] || 'Toko Cabang',
+            plu: row['PLU'] || '000000',
+            desc: row['Deskripsi'] || row['Item'] || 'Produk Excel',
+            date: row['Tanggal'] || '08 Aug 2026',
+            sla: parseInt(row['SLA'] || row['Ageing'] || Math.floor(Math.random()*50)),
+            status: row['Status'] || 'Pending Refund',
+            selected: false
+          }));
+
+          appState.filteredPending = [...appState.pendingData];
+          updateAllUI();
+          alert(`Berhasil mengimpor ${json.length} baris data dari Excel!`);
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    // PDF Export
+    function exportToPDF() {
+      const element = document.getElementById('dashboard-content');
       const opt = {
-        margin:       0.3,
-        filename:     'Executive_Dashboard_SAPA_Balaraja.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'landscape' }
+        margin: 0.2,
+        filename: 'Executive_SAPA_Balaraja.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
       };
       html2pdf().set(opt).from(element).save();
     }
 
-    // Export Multi-Sheet Excel
-    function exportMultiSheetExcel() {
-      const wb = XLSX.utils.book_new();
-      
-      // Sheet Pendingan
-      const wsPending = XLSX.utils.json_to_sheet(samplePendingData);
-      XLSX.utils.book_append_sheet(wb, wsPending, "Pendingan");
-
-      XLSX.writeFile(wb, "Data_Executive_SAPA_Balaraja.xlsx");
-    }
-
-    // Load All System Components
-    function loadAll() {
-      loadMetrics();
-      initCharts();
+    // Complete UI Sync
+    function updateAllUI() {
+      updateKPIs();
       renderPendingTable();
-      renderTopLists();
+      renderAbsensiTable();
+      renderSerahTerima();
+      renderStaf();
+      renderCharts();
     }
 
-    // On Initial Load
-    window.onload = function() {
-      loadAll();
-    };
+    // Initialization on Page Ready
+    window.addEventListener('DOMContentLoaded', () => {
+      generateInitialData();
+      updateAllUI();
+    });
   </script>
 </body>
 </html>
