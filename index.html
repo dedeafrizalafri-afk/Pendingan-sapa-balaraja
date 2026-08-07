@@ -823,17 +823,17 @@
 
     /* 
       ========================================================
-      LOGIKA BARU STATUS SLA / PENANGANAN:
-      Pengecekan mengabaikan 'kirim ulang' (huruf kecil).
+      LOGIKA PEMBARUAN SLA STATUS PENANGANAN:
+      Kata 'kirim ulang' / 'Kirim Ulang' TIDAK LAGI dianggap Selesai.
+      Status Selesai hanya untuk: Refund, Selesai, Done, atau OK.
       ========================================================
     */
     function getSLAInfo(dateStr, handlingText = '') {
       const rawHandling = String(handlingText || '').trim();
       const lowerHandling = rawHandling.toLowerCase();
       
-      // Cek apakah sudah ditangani (mengabaikan 'kirim ulang' huruf kecil)
+      // Kirim ulang TIDAK masuk ke isDone
       const isDone = lowerHandling.includes('refund') || 
-                     (rawHandling.includes('Kirim Ulang') || rawHandling.includes('KIRIM ULANG') || lowerHandling.includes('kirimulang')) || 
                      lowerHandling.includes('selesai') || 
                      lowerHandling.includes('done') || 
                      lowerHandling.includes('ok');
@@ -892,14 +892,12 @@
 
     function checkCriticalAlerts() {
       const H = pendingHeader();
-      const now = new Date();
       criticalData = [];
 
       P.slice(1).forEach(r => {
         const handlingVal = H.handling >= 0 ? String(r[H.handling] || '') : '';
         const slaInfo = getSLAInfo(H.date >= 0 ? normDate(r[H.date]) : null, handlingVal);
         
-        // Hanya yang Over SLA dan Belum Selesai yang masuk Alert Critical
         if (slaInfo.category === 'over') {
           criticalData.push(r);
         }
@@ -1194,7 +1192,7 @@
             
             if(lower.includes('refund')) {
               cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-red-100 dark:bg-red-950 text-alfa-red dark:text-red-300 border border-red-200 dark:border-red-800">${cellVal}</span>`;
-            } else if(cellVal.includes('Kirim Ulang') || cellVal.includes('KIRIM ULANG') || lower.includes('kirimulang')) {
+            } else if(lower.includes('kirim ulang') || lower.includes('kirimulang')) {
               cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-blue-100 dark:bg-blue-950 text-alfa-blue dark:text-blue-300 border border-blue-200 dark:border-blue-800">${cellVal}</span>`;
             } else if(lower.includes('selesai') || lower.includes('done') || lower.includes('ok')) {
               cellVal = `<span class="px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">${cellVal}</span>`;
@@ -1392,7 +1390,7 @@
         const lowerH = handlingVal.toLowerCase();
 
         if (lowerH.includes('refund')) refundCount++;
-        if (handlingVal.includes('Kirim Ulang') || handlingVal.includes('KIRIM ULANG') || lowerH.includes('kirimulang')) kirimCount++;
+        if (lowerH.includes('kirim ulang') || lowerH.includes('kirimulang')) kirimCount++;
 
         if (handlingVal) {
           handlingCategories[handlingVal] = (handlingCategories[handlingVal] || 0) + 1;
